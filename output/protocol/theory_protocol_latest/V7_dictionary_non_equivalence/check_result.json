@@ -1,0 +1,23 @@
+{
+  "check_name": "Dictionary non-equivalence check",
+  "check_id": "V7",
+  "status": "warning",
+  "main_metric": 0.04818935112003387,
+  "threshold": "> 0.05 pass; > 0.01 warning",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "D_mu": 0.04818935112003387,
+    "num_candidates": 5
+  },
+  "artifacts": {
+    "coherence_matrix_fda.png": "V7_dictionary_non_equivalence/figures/coherence_matrix_fda.png",
+    "coherence_matrix_nonfda.png": "V7_dictionary_non_equivalence/figures/coherence_matrix_nonfda.png",
+    "coherence_difference.png": "V7_dictionary_non_equivalence/figures/coherence_difference.png",
+    "dictionary_non_equivalence_metrics.csv": "V7_dictionary_non_equivalence/reports/dictionary_non_equivalence_metrics.csv"
+  },
+  "notes": "",
+  "errors": []
+}

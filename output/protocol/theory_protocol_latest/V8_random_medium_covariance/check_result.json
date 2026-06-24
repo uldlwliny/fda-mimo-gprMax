@@ -1,0 +1,24 @@
+{
+  "check_name": "Random-medium covariance check",
+  "check_id": "V8",
+  "status": "pass",
+  "main_metric": 0.975382842744228,
+  "threshold": "> 0.20 pass; > 0.10 warning",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "rho_off": 0.975382842744228,
+    "samples": 12,
+    "dimension": 96
+  },
+  "artifacts": {
+    "covariance_heatmap.png": "V8_random_medium_covariance/figures/covariance_heatmap.png",
+    "covariance_block_summary.png": "V8_random_medium_covariance/figures/covariance_block_summary.png",
+    "random_medium_covariance_metrics.csv": "V8_random_medium_covariance/reports/random_medium_covariance_metrics.csv",
+    "covariance_block_summary.csv": "V8_random_medium_covariance/reports/covariance_block_summary.csv"
+  },
+  "notes": "",
+  "errors": []
+}

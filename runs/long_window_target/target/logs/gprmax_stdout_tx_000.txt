@@ -1,0 +1,81 @@
+
+=== Electromagnetic modelling software based on the Finite-Difference Time-Domain (FDTD) method 
+
+    www.gprmax.com   __  __
+     __ _ _ __  _ __|  \/  | __ ___  __
+    / _` | '_ \| '__| |\/| |/ _` \ \/ /
+   | (_| | |_) | |  | |  | | (_| |>  <
+    \__, | .__/|_|  |_|  |_|\__,_/_/\_\\
+    |___/|_|
+                     v3.1.7 (Big Smoke)
+
+ Copyright (C) 2015-2023: The University of Edinburgh
+ Authors: Craig Warren and Antonis Giannopoulos
+
+ gprMax is free software: you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later
+  version.
+ gprMax is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+  A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License along with
+  gprMax.  If not, see www.gnu.org/licenses.
+
+Host: DeskCachyOS | Micro-Star International Co., Ltd. MS-7C92 | 1 x AMD Ryzen 7 5800X 8-Core Processor (8 cores, 16 cores with Hyper-Threading) | 31.3GiB RAM | Linux-7.0.11-1-cachyos-bore-x86_64-with-glibc2.43
+
+--- Model 1/1, input file: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/long_window_target/target/config/generated_tx_000.in 
+
+Constants/variables used/available for Python scripting: {c: 299792458.0, current_model_run: 1, e0: 8.8541878188e-12, inputfile: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/long_window_target/target/config/generated_tx_000.in, m0: 1.25663706127e-06, number_model_runs: 1, z0: 376.7303134118051}
+
+Model title: Long-window grid-aligned co-platform TDM FDA-MIMO-GPR scene | scene_001_minimal_long_window | target | tx_000
+Number of CPU (OpenMP) threads: 4
+Spatial discretisation: 0.01 x 0.01 x 0.01m
+Domain size: 0.6 x 0.4 x 0.3m (60 x 40 x 30 = 72000 cells)
+Mode: 3D
+Time step (at CFL limit): 1.92583e-11 secs
+Time window: 1.2e-07 secs (6233 iterations)
+
+Waveform fda_ricker_long_000 of type ricker with maximum amplitude scaling 1, frequency 3e+08Hz created.
+Hertzian dipole with polarity z at 0.22m, 0.16m, 0.15m, using waveform fda_ricker_long_000 created.
+Receiver at 0.23m, 0.16m, 0.15m with output component(s) Ez created.
+Receiver at 0.27m, 0.16m, 0.15m with output component(s) Ez created.
+Receiver at 0.31m, 0.16m, 0.15m with output component(s) Ez created.
+Receiver at 0.35m, 0.16m, 0.15m with output component(s) Ez created.
+Material soil with eps_r=6, sigma=0.01 S/m; mu_r=1, sigma*=0 Ohm/m created.
+Material air with eps_r=1, sigma=0 S/m; mu_r=1, sigma*=0 Ohm/m created.
+Geometry view from 0m, 0m, 0m, to 0.6m, 0.4m, 0.3m, discretisation 0.01m, 0.01m, 0.01m, with filename base geometry_tx_000 created.
+
+Memory (RAM) required: ~55.7MB
+
+Processing geometry related cmds:   0%|                | 0/2 [00:00<?, ?cmds/s]                                                                               Box from 0m, 0m, 0m, to 0.6m, 0.4m, 0.14m of material(s) soil created, dielectric smoothing is on.
+Processing geometry related cmds:   0%|                | 0/2 [00:00<?, ?cmds/s]                                                                               Sphere with centre 0.3m, 0.2m, 0.08m, radius 0.025m, of material(s) pec created, dielectric smoothing is off.
+Processing geometry related cmds:   0%|                | 0/2 [00:00<?, ?cmds/s]Processing geometry related cmds: 100%|██████| 2/2 [00:00<00:00, 1095.12cmds/s]
+
+PML: formulation: HORIPML, order: 1, thickness: 10
+Building PML boundaries:   0%|                           | 0/6 [00:00<?, ?it/s]Building PML boundaries: 100%|██████████████████| 6/6 [00:00<00:00, 816.67it/s]
+
+Building main grid:   0%|                                | 0/2 [00:00<?, ?it/s]Building main grid: 100%|███████████████████████| 2/2 [00:00<00:00, 140.05it/s]
+
+Materials:
+    |                                 |                     |       | sigma |      | sigma*  | Dielectric 
+ ID | Name                            | Type                | eps_r | [S/m] | mu_r | [Ohm/m] | smoothable 
+----+---------------------------------+---------------------+-------+-------+------+---------+------------
+  0 | pec                             | builtin             | 1     | inf   | 1    | 0       | False      
+  1 | free_space                      | builtin             | 1     | 0     | 1    | 0       | True       
+  2 | soil                            |                     | 6     | 0.01  | 1    | 0       | True       
+  3 | air                             |                     | 1     | 0     | 1    | 0       | True       
+  4 | free_space+free_space+soil+soil | dielectric-smoothed | 3.5   | 0.005 | 1    | 0       | True       
+
+Numerical dispersion analysis: estimated largest physical phase-velocity error is -0.52% in material 'soil' whose wavelength sampled by 14 cells. Maximum significant frequency estimated as 8.33075e+08Hz
+
+Writing geometry view file 1/1, geometry_tx_000.vti:   0%| | 0.00/432k [00:00<?Writing geometry view file 1/1, geometry_tx_000.vti: 100%|█| 432k/432k [00:00<0
+
+Output file: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/long_window_target/target/config/generated_tx_000.out
+
+Running simulation, model 1/1:   0%|                  | 0/6233 [00:00<?, ?it/s]Running simulation, model 1/1:   2%|▏     | 135/6233 [00:00<00:04, 1342.35it/s]Running simulation, model 1/1:   4%|▎     | 278/6233 [00:00<00:04, 1389.65it/s]Running simulation, model 1/1:   7%|▍     | 421/6233 [00:00<00:04, 1407.31it/s]Running simulation, model 1/1:   9%|▌     | 572/6233 [00:00<00:03, 1445.75it/s]Running simulation, model 1/1:  12%|▋     | 717/6233 [00:00<00:03, 1434.36it/s]Running simulation, model 1/1:  14%|▊     | 862/6233 [00:00<00:03, 1439.23it/s]Running simulation, model 1/1:  16%|▊    | 1009/6233 [00:00<00:03, 1447.87it/s]Running simulation, model 1/1:  19%|▉    | 1154/6233 [00:00<00:03, 1434.37it/s]Running simulation, model 1/1:  21%|█    | 1298/6233 [00:00<00:03, 1368.30it/s]Running simulation, model 1/1:  23%|█▏   | 1436/6233 [00:01<00:03, 1317.54it/s]Running simulation, model 1/1:  25%|█▎   | 1569/6233 [00:01<00:03, 1299.57it/s]Running simulation, model 1/1:  27%|█▎   | 1700/6233 [00:01<00:03, 1296.96it/s]Running simulation, model 1/1:  30%|█▍   | 1839/6233 [00:01<00:03, 1322.42it/s]Running simulation, model 1/1:  32%|█▌   | 1975/6233 [00:01<00:03, 1332.02it/s]Running simulation, model 1/1:  34%|█▋   | 2114/6233 [00:01<00:03, 1348.52it/s]Running simulation, model 1/1:  36%|█▊   | 2264/6233 [00:01<00:02, 1391.26it/s]Running simulation, model 1/1:  39%|█▉   | 2408/6233 [00:01<00:02, 1404.30it/s]Running simulation, model 1/1:  41%|██   | 2552/6233 [00:01<00:02, 1412.00it/s]Running simulation, model 1/1:  43%|██▏  | 2705/6233 [00:01<00:02, 1444.56it/s]Running simulation, model 1/1:  46%|██▎  | 2863/6233 [00:02<00:02, 1484.33it/s]Running simulation, model 1/1:  49%|██▍  | 3030/6233 [00:02<00:02, 1538.26it/s]Running simulation, model 1/1:  51%|██▌  | 3195/6233 [00:02<00:01, 1569.22it/s]Running simulation, model 1/1:  54%|██▋  | 3363/6233 [00:02<00:01, 1601.02it/s]Running simulation, model 1/1:  57%|██▊  | 3531/6233 [00:02<00:01, 1623.97it/s]Running simulation, model 1/1:  59%|██▉  | 3699/6233 [00:02<00:01, 1638.74it/s]Running simulation, model 1/1:  62%|███  | 3863/6233 [00:02<00:01, 1611.93it/s]Running simulation, model 1/1:  65%|███▏ | 4037/6233 [00:02<00:01, 1649.45it/s]Running simulation, model 1/1:  67%|███▎ | 4203/6233 [00:02<00:01, 1652.22it/s]Running simulation, model 1/1:  70%|███▌ | 4369/6233 [00:02<00:01, 1643.62it/s]Running simulation, model 1/1:  73%|███▋ | 4534/6233 [00:03<00:01, 1623.73it/s]Running simulation, model 1/1:  75%|███▊ | 4697/6233 [00:03<00:00, 1584.10it/s]Running simulation, model 1/1:  78%|███▉ | 4858/6233 [00:03<00:00, 1588.82it/s]Running simulation, model 1/1:  81%|████ | 5018/6233 [00:03<00:00, 1590.97it/s]Running simulation, model 1/1:  83%|████▏| 5183/6233 [00:03<00:00, 1607.11it/s]Running simulation, model 1/1:  86%|████▎| 5352/6233 [00:03<00:00, 1629.59it/s]Running simulation, model 1/1:  88%|████▍| 5516/6233 [00:03<00:00, 1624.22it/s]Running simulation, model 1/1:  91%|████▌| 5679/6233 [00:03<00:00, 1594.37it/s]Running simulation, model 1/1:  94%|████▋| 5845/6233 [00:03<00:00, 1613.25it/s]Running simulation, model 1/1:  96%|████▊| 6012/6233 [00:03<00:00, 1627.93it/s]Running simulation, model 1/1:  99%|████▉| 6185/6233 [00:04<00:00, 1656.24it/s]Running simulation, model 1/1: 100%|█████| 6233/6233 [00:04<00:00, 1516.05it/s]
+Memory (RAM) used: ~127MB
+Solving time [HH:MM:SS]: 0:00:04.112012
+
+=== Simulation completed in [HH:MM:SS]: 0:00:04.250661 ========================
+

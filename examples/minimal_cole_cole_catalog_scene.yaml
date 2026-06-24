@@ -1,0 +1,71 @@
+name: scene_003_cole_cole_catalog
+random_seed: 20260606
+output:
+  root: ../runs
+  export_npz: true
+  diagnostics: true
+  valid_band_threshold: 0.001
+  eta: 1.0e-12
+  frequency_range: [0.0, 3.0e9]
+  window: hann
+
+domain:
+  size: [0.60, 0.40, 0.30]
+grid:
+  spacing: [0.01, 0.01, 0.01]
+time:
+  window: 6.0e-9
+
+media:
+  use_default_catalog: true
+  fit:
+    n_poles: 12
+    frequency_min: 5.0e7
+    frequency_max: 1.5e8
+    num_frequencies: 256
+  materials:
+    soil:
+      from_catalog: S1
+
+scene:
+  title: Minimal catalog Cole-Cole FDA-MIMO-GPR scene
+  materials: []
+  geometry:
+    - "#box: 0 0 0 0.60 0.40 0.14 soil"
+  geometry_view: true
+
+array:
+  mode: offset
+  rx_offset: [0.005, 0.0, 0.0]
+  polarization: z
+  tx_positions:
+    - [0.22, 0.16, 0.15]
+    - [0.26, 0.16, 0.15]
+    - [0.30, 0.16, 0.15]
+    - [0.34, 0.16, 0.15]
+
+fda:
+  type: linear
+  f0: 1.0e9
+  df: 2.5e7
+
+waveform:
+  mode: builtin
+  shape: ricker
+  amplitude: 1.0
+  identifier_prefix: fda_ricker
+
+receiver:
+  component: Ez
+
+variants:
+  target:
+    geometry:
+      - "#sphere: 0.30 0.20 0.08 0.025 pec"
+  background:
+    geometry: []
+
+execution:
+  executable: ["python", "-m", "gprMax"]
+  omp_threads: 4
+  failure_policy: stop

@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "required": [
+    "/snapshot/time_traces",
+    "/snapshot/frequency_tensor_raw",
+    "/snapshot/frequency_tensor_cal",
+    "/axis/tx_positions",
+    "/axis/rx_positions",
+    "/axis/time",
+    "/axis/frequencies",
+    "/axis/fda_frequencies",
+    "/metadata/config_yaml",
+    "/metadata/gprmax_version",
+    "/metadata/adapter_version",
+    "/metadata/random_seed"
+  ],
+  "missing": []
+}

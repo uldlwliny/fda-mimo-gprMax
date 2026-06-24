@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fda-mimo-gprmax"
+version = "0.1.0"
+description = "Compatibility layer for ideal co-platform TDM FDA-MIMO-GPR snapshot generation using gprMax"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "FDA-MIMO-GPR Simulation Project" }]
+dependencies = [
+  "numpy>=1.24",
+  "h5py>=3.8",
+  "PyYAML>=6.0",
+  "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=7.0",
+]
+zarr = [
+  "zarr>=2.16",
+]
+
+[project.scripts]
+fda-mimo-gprmax = "fda_mimo_gprmax.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "slow: tests that are computationally expensive",
+  "integration: tests that require an installed gprMax runtime",
+]

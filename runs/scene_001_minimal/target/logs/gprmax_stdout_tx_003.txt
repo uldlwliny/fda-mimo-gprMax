@@ -1,0 +1,81 @@
+
+=== Electromagnetic modelling software based on the Finite-Difference Time-Domain (FDTD) method 
+
+    www.gprmax.com   __  __
+     __ _ _ __  _ __|  \/  | __ ___  __
+    / _` | '_ \| '__| |\/| |/ _` \ \/ /
+   | (_| | |_) | |  | |  | | (_| |>  <
+    \__, | .__/|_|  |_|  |_|\__,_/_/\_\\
+    |___/|_|
+                     v3.1.7 (Big Smoke)
+
+ Copyright (C) 2015-2023: The University of Edinburgh
+ Authors: Craig Warren and Antonis Giannopoulos
+
+ gprMax is free software: you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later
+  version.
+ gprMax is distributed in the hope that it will be useful, but WITHOUT ANY
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+  A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License along with
+  gprMax.  If not, see www.gnu.org/licenses.
+
+Host: DeskCachyOS | Micro-Star International Co., Ltd. MS-7C92 | 1 x AMD Ryzen 7 5800X 8-Core Processor (8 cores, 16 cores with Hyper-Threading) | 31.3GiB RAM | Linux-7.0.11-1-cachyos-bore-x86_64-with-glibc2.43
+
+--- Model 1/1, input file: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal/target/config/generated_tx_003.in 
+
+Constants/variables used/available for Python scripting: {c: 299792458.0, current_model_run: 1, e0: 8.8541878188e-12, inputfile: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal/target/config/generated_tx_003.in, m0: 1.25663706127e-06, number_model_runs: 1, z0: 376.7303134118051}
+
+Model title: Minimal co-platform TDM FDA-MIMO-GPR scene | scene_001_minimal | target | tx_003
+Number of CPU (OpenMP) threads: 4
+Spatial discretisation: 0.01 x 0.01 x 0.01m
+Domain size: 0.6 x 0.4 x 0.3m (60 x 40 x 30 = 72000 cells)
+Mode: 3D
+Time step (at CFL limit): 1.92583e-11 secs
+Time window: 6e-09 secs (313 iterations)
+
+Waveform fda_ricker_003 of type ricker with maximum amplitude scaling 1, frequency 1.075e+09Hz created.
+Hertzian dipole with polarity z at 0.34m, 0.16m, 0.15m, using waveform fda_ricker_003 created.
+Receiver at 0.22m, 0.16m, 0.15m with output component(s) Ez created.
+Receiver at 0.26m, 0.16m, 0.15m with output component(s) Ez created.
+Receiver at 0.3m, 0.16m, 0.15m with output component(s) Ez created.
+Receiver at 0.34m, 0.16m, 0.15m with output component(s) Ez created.
+Material soil with eps_r=6, sigma=0.01 S/m; mu_r=1, sigma*=0 Ohm/m created.
+Material air with eps_r=1, sigma=0 S/m; mu_r=1, sigma*=0 Ohm/m created.
+Geometry view from 0m, 0m, 0m, to 0.6m, 0.4m, 0.3m, discretisation 0.01m, 0.01m, 0.01m, with filename base geometry_tx_003 created.
+
+Memory (RAM) required: ~55.7MB
+
+Processing geometry related cmds:   0%|                | 0/2 [00:00<?, ?cmds/s]                                                                               Box from 0m, 0m, 0m, to 0.6m, 0.4m, 0.14m of material(s) soil created, dielectric smoothing is on.
+Processing geometry related cmds:   0%|                | 0/2 [00:00<?, ?cmds/s]                                                                               Sphere with centre 0.3m, 0.2m, 0.08m, radius 0.025m, of material(s) pec created, dielectric smoothing is off.
+Processing geometry related cmds:   0%|                | 0/2 [00:00<?, ?cmds/s]Processing geometry related cmds: 100%|██████| 2/2 [00:00<00:00, 1069.02cmds/s]
+
+PML: formulation: HORIPML, order: 1, thickness: 10
+Building PML boundaries:   0%|                           | 0/6 [00:00<?, ?it/s]Building PML boundaries: 100%|██████████████████| 6/6 [00:00<00:00, 862.26it/s]
+
+Building main grid:   0%|                                | 0/2 [00:00<?, ?it/s]Building main grid: 100%|███████████████████████| 2/2 [00:00<00:00, 138.37it/s]
+
+Materials:
+    |                                 |                     |       | sigma |      | sigma*  | Dielectric 
+ ID | Name                            | Type                | eps_r | [S/m] | mu_r | [Ohm/m] | smoothable 
+----+---------------------------------+---------------------+-------+-------+------+---------+------------
+  0 | pec                             | builtin             | 1     | inf   | 1    | 0       | False      
+  1 | free_space                      | builtin             | 1     | 0     | 1    | 0       | True       
+  2 | soil                            |                     | 6     | 0.01  | 1    | 0       | True       
+  3 | air                             |                     | 1     | 0     | 1    | 0       | True       
+  4 | free_space+free_space+soil+soil | dielectric-smoothed | 3.5   | 0.005 | 1    | 0       | True       
+
+WARNING: Potentially significant numerical dispersion. Estimated largest physical phase-velocity error is -8.27% in material 'soil' whose wavelength sampled by 4 cells. Maximum significant frequency estimated as 2.98614e+09Hz
+
+Writing geometry view file 1/1, geometry_tx_003.vti:   0%| | 0.00/432k [00:00<?Writing geometry view file 1/1, geometry_tx_003.vti: 100%|█| 432k/432k [00:00<0
+
+Output file: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal/target/config/generated_tx_003.out
+
+Running simulation, model 1/1:   0%|                   | 0/313 [00:00<?, ?it/s]Running simulation, model 1/1:  37%|██▌    | 116/313 [00:00<00:00, 1154.86it/s]Running simulation, model 1/1:  74%|█████▏ | 233/313 [00:00<00:00, 1161.30it/s]Running simulation, model 1/1: 100%|███████| 313/313 [00:00<00:00, 1123.10it/s]
+Memory (RAM) used: ~129MB
+Solving time [HH:MM:SS]: 0:00:00.279187
+
+=== Simulation completed in [HH:MM:SS]: 0:00:00.367246 ========================
+

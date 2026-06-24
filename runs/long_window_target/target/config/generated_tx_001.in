@@ -1,0 +1,19 @@
+#title: Long-window grid-aligned co-platform TDM FDA-MIMO-GPR scene | scene_001_minimal_long_window | target | tx_001
+#domain: 0.6 0.4 0.3
+#dx_dy_dz: 0.01 0.01 0.01
+#time_window: 1.2e-07
+
+#material: 6 0.01 1 0 soil
+#material: 1 0 1 0 air
+
+#box: 0 0 0 0.60 0.40 0.14 soil
+#sphere: 0.30 0.20 0.08 0.025 pec
+
+#waveform: ricker 1 325000000 fda_ricker_long_001
+#hertzian_dipole: z 0.26 0.16 0.15 fda_ricker_long_001
+#rx: 0.23 0.16 0.15 rx001 Ez
+#rx: 0.27 0.16 0.15 rx002 Ez
+#rx: 0.31 0.16 0.15 rx003 Ez
+#rx: 0.35 0.16 0.15 rx004 Ez
+
+#geometry_view: 0 0 0 0.6 0.4 0.3 0.01 0.01 0.01 geometry_tx_001 n

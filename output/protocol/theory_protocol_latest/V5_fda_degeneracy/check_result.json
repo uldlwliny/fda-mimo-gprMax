@@ -1,0 +1,23 @@
+{
+  "check_name": "FDA degeneracy check",
+  "check_id": "V5",
+  "status": "pass",
+  "main_metric": 0.6839168528531331,
+  "threshold": "> 0.05 pass; > 0.01 warning",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "D_Y": 0.6839168528531331,
+    "D_Y_cal": 0.6728740426343415,
+    "status_rule": "D_Y > 0.05 pass; >0.01 warning"
+  },
+  "artifacts": {
+    "fda_vs_nonfda_source_spectra.png": "V5_fda_degeneracy/figures/fda_vs_nonfda_source_spectra.png",
+    "fda_vs_nonfda_phase_difference.png": "V5_fda_degeneracy/figures/fda_vs_nonfda_phase_difference.png",
+    "fda_degeneracy_metrics.csv": "V5_fda_degeneracy/reports/fda_degeneracy_metrics.csv"
+  },
+  "notes": "",
+  "errors": []
+}

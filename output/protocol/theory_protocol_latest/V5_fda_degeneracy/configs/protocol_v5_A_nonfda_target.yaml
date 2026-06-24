@@ -1,0 +1,105 @@
+array:
+  mode: offset
+  polarization: z
+  rx_offset:
+  - 0.005
+  - 0.0
+  - 0.0
+  rx_positions:
+  - - 0.225
+    - 0.16
+    - 0.15
+  - - 0.265
+    - 0.16
+    - 0.15
+  - - 0.305
+    - 0.16
+    - 0.15
+  - - 0.34500000000000003
+    - 0.16
+    - 0.15
+  tx_positions:
+  - - 0.22
+    - 0.16
+    - 0.15
+  - - 0.26
+    - 0.16
+    - 0.15
+  - - 0.3
+    - 0.16
+    - 0.15
+  - - 0.34
+    - 0.16
+    - 0.15
+domain:
+  size:
+  - 0.6
+  - 0.4
+  - 0.3
+execution:
+  executable:
+  - python
+  - -m
+  - gprMax
+  extra_args: []
+  failure_policy: stop
+  gpu: []
+  mpi: null
+  omp_threads: 4
+fda:
+  df: 0.0
+  f0: 1000000000.0
+  frequencies:
+  - 1000000000.0
+  - 1000000000.0
+  - 1000000000.0
+  - 1000000000.0
+  type: linear
+grid:
+  spacing:
+  - 0.01
+  - 0.01
+  - 0.01
+name: protocol_v5_A_nonfda_target
+output:
+  diagnostics: true
+  eta: 1.0e-12
+  export_npz: true
+  frequency_range:
+  - 0.0
+  - 3000000000.0
+  root: /home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs
+  valid_band_threshold: 0.001
+  window: hann
+protocol_metadata:
+  delta_f: 0.0
+  family: A
+  variant: nonfda_target
+random_seed: 20260606
+receiver:
+  component: Ez
+scene:
+  geometry:
+  - '#box: 0 0 0 0.60 0.40 0.14 soil'
+  geometry_view: true
+  materials:
+  - '#material: 6 0.01 1 0 soil'
+  - '#material: 1 0 1 0 air'
+  title: Minimal co-platform TDM FDA-MIMO-GPR scene
+time:
+  window: 6.0e-09
+variants:
+- geometry:
+  - '#sphere: 0.30 0.20 0.08 0.025 pec'
+  metadata: {}
+  name: target
+- geometry: []
+  metadata: {}
+  name: background
+waveform:
+  amplitude: 1.0
+  has_time: false
+  identifier_prefix: fda_ricker
+  mode: builtin
+  num_samples: 0
+  shape: ricker

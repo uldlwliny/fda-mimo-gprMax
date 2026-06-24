@@ -1,0 +1,504 @@
+{
+  "protocol": "theory_validation_protocol",
+  "scenario": "scene_001_minimal",
+  "checks": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8"
+  ],
+  "items": [
+    {
+      "scenario_id": "protocol_v1_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V1"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V1_source_fda_law/configs/protocol_v1_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V1_source_fda_law/processed/snapshot.h5",
+      "config_hash": "0bbc5f36e190e7c779b6d75876f02753c8999e06114f4b22e2a09c4542d89889",
+      "metadata": {
+        "description": "homogeneous half-space + single target"
+      }
+    },
+    {
+      "scenario_id": "protocol_v2_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V2"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V2_tensor_integrity/configs/protocol_v2_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V2_tensor_integrity/processed/snapshot.h5",
+      "config_hash": "a1b49f9853f530cf9062eb7295d2112716ebf76fd582548e061b4098e54fc889",
+      "metadata": {
+        "description": "homogeneous half-space + single target"
+      }
+    },
+    {
+      "scenario_id": "protocol_v3_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V3"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V3_mimo_geometry/configs/protocol_v3_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V3_mimo_geometry/processed/snapshot.h5",
+      "config_hash": "3447b6a78341d30707cc5b456d449cf557a3dec8c1f5baedc4c04ab7bedd1322",
+      "metadata": {
+        "description": "homogeneous half-space + single target"
+      }
+    },
+    {
+      "scenario_id": "protocol_v5_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V5"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V5_fda_degeneracy/configs/protocol_v5_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V5_fda_degeneracy/processed/snapshot.h5",
+      "config_hash": "91ada7ce99780da2ebe25b2f0c47ac1cb575bfa098c1b455a34e12cbb3cd4852",
+      "metadata": {
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v5_A_nonfda_target",
+      "family": "A",
+      "variant": "nonfda_target",
+      "check_ids": [
+        "V5"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V5_fda_degeneracy/configs/protocol_v5_A_nonfda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V5_fda_degeneracy/processed/snapshot.h5",
+      "config_hash": "ca2a8cceb40e2b3fd90b586f2d0d7767aec522ffeede330e80e1b7ab75f03a00",
+      "metadata": {
+        "delta_f": 0.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v4_B_epsilon_4",
+      "family": "B",
+      "variant": "epsilon_4",
+      "check_ids": [
+        "V4"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/configs/protocol_v4_B_epsilon_4.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/processed/snapshot.h5",
+      "config_hash": "30fafc8bedf4549d257febf7dc0bf55eab50e4fff6def8b129a3e4bd52c992a2",
+      "metadata": {
+        "epsilon_r": 4,
+        "sigma": 0.01
+      }
+    },
+    {
+      "scenario_id": "protocol_v4_B_epsilon_6",
+      "family": "B",
+      "variant": "epsilon_6",
+      "check_ids": [
+        "V4"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/configs/protocol_v4_B_epsilon_6.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/processed/snapshot.h5",
+      "config_hash": "6a530df688197905cc5aa919fc265232344702ca5fec0f182e1f59e77668f4c4",
+      "metadata": {
+        "epsilon_r": 6,
+        "sigma": 0.01
+      }
+    },
+    {
+      "scenario_id": "protocol_v4_B_epsilon_9",
+      "family": "B",
+      "variant": "epsilon_9",
+      "check_ids": [
+        "V4"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/configs/protocol_v4_B_epsilon_9.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/processed/snapshot.h5",
+      "config_hash": "7e11cd2fe1a480309efe7b85896388b38f00274a6f58c9e64cda75cd5d3c8790",
+      "metadata": {
+        "epsilon_r": 9,
+        "sigma": 0.01
+      }
+    },
+    {
+      "scenario_id": "protocol_v4_B_sigma_0.001",
+      "family": "B",
+      "variant": "sigma_0.001",
+      "check_ids": [
+        "V4"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/configs/protocol_v4_B_sigma_0.001.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/processed/snapshot.h5",
+      "config_hash": "b298a35d8c56a16e9e245090a575d05e73a23d5dd43ce51c9cc7740256df40ef",
+      "metadata": {
+        "epsilon_r": 6,
+        "sigma": 0.001
+      }
+    },
+    {
+      "scenario_id": "protocol_v4_B_sigma_0.01",
+      "family": "B",
+      "variant": "sigma_0.01",
+      "check_ids": [
+        "V4"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/configs/protocol_v4_B_sigma_0.01.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/processed/snapshot.h5",
+      "config_hash": "f8f347b0790788a7027e880df48aef93e2c9abbdc45197b869979f1bdf444619",
+      "metadata": {
+        "epsilon_r": 6,
+        "sigma": 0.01
+      }
+    },
+    {
+      "scenario_id": "protocol_v4_B_sigma_0.05",
+      "family": "B",
+      "variant": "sigma_0.05",
+      "check_ids": [
+        "V4"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/configs/protocol_v4_B_sigma_0.05.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V4_gpr_medium/processed/snapshot.h5",
+      "config_hash": "f8e1f99c7589d792dd5e2bd56fb4d7a614cd03657e07d961464461732bce3360",
+      "metadata": {
+        "epsilon_r": 6,
+        "sigma": 0.05
+      }
+    },
+    {
+      "scenario_id": "protocol_v6_C_depth_0.30",
+      "family": "C",
+      "variant": "depth_0.30",
+      "check_ids": [
+        "V6"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/configs/protocol_v6_C_depth_0.30.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/processed/snapshot.h5",
+      "config_hash": "294ff64a7775549db0081400701da2c2997760b476db0beef8d028d0152852aa",
+      "metadata": {
+        "target_depth_m": 0.3,
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v6_C_depth_0.45",
+      "family": "C",
+      "variant": "depth_0.45",
+      "check_ids": [
+        "V6"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/configs/protocol_v6_C_depth_0.45.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/processed/snapshot.h5",
+      "config_hash": "6ef90f298ad7f1544326e2bddae6d90248bfabe7d12d5187eeb2cbd4d711e77c",
+      "metadata": {
+        "target_depth_m": 0.45,
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v6_C_depth_0.60",
+      "family": "C",
+      "variant": "depth_0.60",
+      "check_ids": [
+        "V6"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/configs/protocol_v6_C_depth_0.60.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/processed/snapshot.h5",
+      "config_hash": "468e5682b11c228a0b61a2e39104d8c8b8a3679f50ffb2c074f1a74f795eb3f1",
+      "metadata": {
+        "target_depth_m": 0.6,
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v6_C_depth_0.75",
+      "family": "C",
+      "variant": "depth_0.75",
+      "check_ids": [
+        "V6"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/configs/protocol_v6_C_depth_0.75.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/processed/snapshot.h5",
+      "config_hash": "91139e0ffff0765e22cb3c589d1738561621004c295fb3352300047098eb3164",
+      "metadata": {
+        "target_depth_m": 0.75,
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v6_C_nonfda_control",
+      "family": "C",
+      "variant": "nonfda_control",
+      "check_ids": [
+        "V6"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/configs/protocol_v6_C_nonfda_control.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V6_depth_frequency_coupling/processed/snapshot.h5",
+      "config_hash": "b8b17a6a865fa931ee465657cd07f16824b9fc91f480b0c003164e078abeda7a",
+      "metadata": {
+        "delta_f": 0.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_0",
+      "family": "dictionary",
+      "variant": "candidate_0",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_0.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "96a2cc6806647e4c170978ec5a04ddf351bc1aa9d9b49bbf85f39504aa0be491",
+      "metadata": {
+        "target_position": [
+          0.22,
+          0.2,
+          0.08
+        ],
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_0_nonfda",
+      "family": "dictionary",
+      "variant": "candidate_0_nonfda",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_0_nonfda.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "7f25a4367735e7b38213fdc6af38b761c99fffbb1af7894fcbf9d6249a0ed86e",
+      "metadata": {
+        "target_position": [
+          0.22,
+          0.2,
+          0.08
+        ],
+        "delta_f": 0.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_1",
+      "family": "dictionary",
+      "variant": "candidate_1",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_1.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "654b7fba26366a1e0dd7706f5e280ea4a26df707b27ced6b7d3309e16ac702f7",
+      "metadata": {
+        "target_position": [
+          0.28,
+          0.2,
+          0.08
+        ],
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_1_nonfda",
+      "family": "dictionary",
+      "variant": "candidate_1_nonfda",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_1_nonfda.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "8748119aafde31c4abda839d4aafdfdd8de19a032b5e667caf874500487f3212",
+      "metadata": {
+        "target_position": [
+          0.28,
+          0.2,
+          0.08
+        ],
+        "delta_f": 0.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_2",
+      "family": "dictionary",
+      "variant": "candidate_2",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_2.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "a8084efa6e2f22e6a69f8ac1611f381780435434aa9c855f85564d7146b6d5ef",
+      "metadata": {
+        "target_position": [
+          0.34,
+          0.2,
+          0.08
+        ],
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_2_nonfda",
+      "family": "dictionary",
+      "variant": "candidate_2_nonfda",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_2_nonfda.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "ae7f6259d863d90246b4901edfcbfe8a449f80e39a7d5fed3a1a53eff5b2f1b8",
+      "metadata": {
+        "target_position": [
+          0.34,
+          0.2,
+          0.08
+        ],
+        "delta_f": 0.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_3",
+      "family": "dictionary",
+      "variant": "candidate_3",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_3.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "fc13cad2e7a93d3e01f9999139244e0a0652f1b53932da43389fdbde5121b2fe",
+      "metadata": {
+        "target_position": [
+          0.4,
+          0.2,
+          0.08
+        ],
+        "delta_f": 25000000.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v7_dictionary_candidate_3_nonfda",
+      "family": "dictionary",
+      "variant": "candidate_3_nonfda",
+      "check_ids": [
+        "V7"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/configs/protocol_v7_dictionary_candidate_3_nonfda.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V7_dictionary_non_equivalence/processed/snapshot.h5",
+      "config_hash": "abac6b532df499a24a493d0061132682f78ec34396e11aae08ad808043beeb3b",
+      "metadata": {
+        "target_position": [
+          0.4,
+          0.2,
+          0.08
+        ],
+        "delta_f": 0.0
+      }
+    },
+    {
+      "scenario_id": "protocol_v8_D_random_medium_000",
+      "family": "D",
+      "variant": "random_medium_000",
+      "check_ids": [
+        "V8"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/configs/protocol_v8_D_random_medium_000.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/processed/snapshot.h5",
+      "config_hash": "e39cb8402556bfa876bb928f75cc78dfb9c1b193c8dba1056a74c5cfd054f36c",
+      "metadata": {
+        "sample_id": 0,
+        "seed": 1000,
+        "perturbation_strength": 0.05,
+        "correlation_length": 0.08
+      }
+    },
+    {
+      "scenario_id": "protocol_v8_D_random_medium_001",
+      "family": "D",
+      "variant": "random_medium_001",
+      "check_ids": [
+        "V8"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/configs/protocol_v8_D_random_medium_001.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/processed/snapshot.h5",
+      "config_hash": "f7d9e543b18c1795c98dbb33db44a392c3e643a8800b0020d516adef298b456a",
+      "metadata": {
+        "sample_id": 1,
+        "seed": 1001,
+        "perturbation_strength": 0.05,
+        "correlation_length": 0.08
+      }
+    },
+    {
+      "scenario_id": "protocol_v8_D_random_medium_002",
+      "family": "D",
+      "variant": "random_medium_002",
+      "check_ids": [
+        "V8"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/configs/protocol_v8_D_random_medium_002.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/processed/snapshot.h5",
+      "config_hash": "db21c35110d4e9a1c2077dc5e8fb7b508315c1c3cce71aecb456a6cc6a1417f9",
+      "metadata": {
+        "sample_id": 2,
+        "seed": 1002,
+        "perturbation_strength": 0.05,
+        "correlation_length": 0.08
+      }
+    },
+    {
+      "scenario_id": "protocol_v8_D_random_medium_003",
+      "family": "D",
+      "variant": "random_medium_003",
+      "check_ids": [
+        "V8"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/configs/protocol_v8_D_random_medium_003.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/processed/snapshot.h5",
+      "config_hash": "e5369a0752e6df1fdcf13d60a99712bf94e34e3ad32341abc741460c8ede6f2a",
+      "metadata": {
+        "sample_id": 3,
+        "seed": 1003,
+        "perturbation_strength": 0.05,
+        "correlation_length": 0.08
+      }
+    },
+    {
+      "scenario_id": "protocol_v8_D_random_medium_004",
+      "family": "D",
+      "variant": "random_medium_004",
+      "check_ids": [
+        "V8"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/configs/protocol_v8_D_random_medium_004.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/processed/snapshot.h5",
+      "config_hash": "34b7e31ed015c7a0c3ffb1f884c4b8fd6d9a1a8b6868d312ec6996fe9bdb5aa5",
+      "metadata": {
+        "sample_id": 4,
+        "seed": 1004,
+        "perturbation_strength": 0.05,
+        "correlation_length": 0.08
+      }
+    },
+    {
+      "scenario_id": "protocol_v8_D_random_medium_005",
+      "family": "D",
+      "variant": "random_medium_005",
+      "check_ids": [
+        "V8"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/configs/protocol_v8_D_random_medium_005.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest/V8_random_medium_covariance/processed/snapshot.h5",
+      "config_hash": "4878779d9aaaa309d613e0d67816bf05040fb38f38b3acf52ff0543348db4ce6",
+      "metadata": {
+        "sample_id": 5,
+        "seed": 1005,
+        "perturbation_strength": 0.05,
+        "correlation_length": 0.08
+      }
+    }
+  ]
+}

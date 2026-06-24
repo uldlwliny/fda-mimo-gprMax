@@ -1,0 +1,14 @@
+openspec/
+
+experiments/
+
+# FDA-MIMO-GPR application experiment heavy outputs
+# /experiments/**/runs/**
+# !experiments/_template/runs/
+# !experiments/_template/runs/.gitkeep
+# experiments/**/results/**/*.h5
+# experiments/**/results/**/*.npz
+# experiments/**/results/**/*.out
+# experiments/**/results/**/*.vti
+# experiments/**/results/**/*.vtp
+# experiments/**/results/**/*.log

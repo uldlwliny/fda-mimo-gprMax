@@ -1,0 +1,31 @@
+{
+  "time_traces_shape": [
+    4,
+    4,
+    6233
+  ],
+  "frequency_tensor_raw_shape": [
+    4,
+    4,
+    121
+  ],
+  "source_spectra_shape": [
+    4,
+    121
+  ],
+  "valid_fraction": 0.9793388429752066,
+  "frequency_min": 0.0,
+  "frequency_max": 999690233.8815186,
+  "fft_bin_spacing_hz": 8330751.949012637,
+  "fda_delta_f_hz": 25000000.0,
+  "fft_resolution_ratio": 0.33323007796050547,
+  "can_resolve_fda_step_by_fft": true,
+  "actual_positions_available": true,
+  "max_requested_actual_rx_error_m": 0.0,
+  "numerical_dispersion": {
+    "warning": true,
+    "risk": "LOW",
+    "max_abs_phase_velocity_error_percent": 0.81,
+    "warnings": []
+  }
+}

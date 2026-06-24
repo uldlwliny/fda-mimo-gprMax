@@ -1,0 +1,24 @@
+{
+  "check_name": "MIMO geometry check",
+  "check_id": "V3",
+  "status": "pass",
+  "main_metric": 0.854812534811656,
+  "threshold": "> 0.5 and channels not copied",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "path_arrival_correlation": 0.854812534811656,
+    "energy_std": 3.3797221183776855,
+    "copied_channels": false
+  },
+  "artifacts": {
+    "channel_energy_matrix.png": "V3_mimo_geometry/figures/channel_energy_matrix.png",
+    "arrival_time_matrix.png": "V3_mimo_geometry/figures/arrival_time_matrix.png",
+    "path_length_vs_arrival_time.png": "V3_mimo_geometry/figures/path_length_vs_arrival_time.png",
+    "metrics.csv": "V3_mimo_geometry/reports/mimo_geometry_metrics.csv"
+  },
+  "notes": "",
+  "errors": []
+}

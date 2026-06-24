@@ -1,0 +1,2 @@
+[console_scripts]
+fda-mimo-gprmax = fda_mimo_gprmax.cli:main

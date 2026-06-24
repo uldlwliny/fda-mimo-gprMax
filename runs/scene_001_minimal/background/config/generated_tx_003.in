@@ -1,0 +1,18 @@
+#title: Minimal co-platform TDM FDA-MIMO-GPR scene | scene_001_minimal | background | tx_003
+#domain: 0.6 0.4 0.3
+#dx_dy_dz: 0.01 0.01 0.01
+#time_window: 6e-09
+
+#material: 6 0.01 1 0 soil
+#material: 1 0 1 0 air
+
+#box: 0 0 0 0.60 0.40 0.14 soil
+
+#waveform: ricker 1 1.075e+09 fda_ricker_003
+#hertzian_dipole: z 0.34 0.16 0.15 fda_ricker_003
+#rx: 0.225 0.16 0.15 rx001 Ez
+#rx: 0.265 0.16 0.15 rx002 Ez
+#rx: 0.305 0.16 0.15 rx003 Ez
+#rx: 0.345 0.16 0.15 rx004 Ez
+
+#geometry_view: 0 0 0 0.6 0.4 0.3 0.01 0.01 0.01 geometry_tx_003 n

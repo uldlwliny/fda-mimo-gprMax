@@ -1,0 +1,321 @@
+{
+  "stage": "rendered",
+  "scenario": {
+    "name": "scene_001_minimal",
+    "random_seed": 20260606,
+    "domain": {
+      "size": [
+        0.6,
+        0.4,
+        0.3
+      ]
+    },
+    "grid": {
+      "spacing": [
+        0.01,
+        0.01,
+        0.01
+      ]
+    },
+    "time": {
+      "window": 6e-09
+    },
+    "array": {
+      "mode": "offset",
+      "rx_offset": [
+        0.005,
+        0.0,
+        0.0
+      ],
+      "polarization": "z",
+      "tx_positions": [
+        [
+          0.22,
+          0.16,
+          0.15
+        ],
+        [
+          0.26,
+          0.16,
+          0.15
+        ],
+        [
+          0.3,
+          0.16,
+          0.15
+        ],
+        [
+          0.34,
+          0.16,
+          0.15
+        ]
+      ],
+      "rx_positions": [
+        [
+          0.225,
+          0.16,
+          0.15
+        ],
+        [
+          0.265,
+          0.16,
+          0.15
+        ],
+        [
+          0.305,
+          0.16,
+          0.15
+        ],
+        [
+          0.34500000000000003,
+          0.16,
+          0.15
+        ]
+      ]
+    },
+    "fda": {
+      "type": "linear",
+      "f0": 1000000000.0,
+      "df": 25000000.0,
+      "frequencies": [
+        1000000000.0,
+        1025000000.0,
+        1050000000.0,
+        1075000000.0
+      ]
+    },
+    "waveform": {
+      "mode": "builtin",
+      "shape": "ricker",
+      "amplitude": 1.0,
+      "identifier_prefix": "fda_ricker",
+      "num_samples": 0,
+      "has_time": false
+    },
+    "receiver": {
+      "component": "Ez"
+    },
+    "scene": {
+      "title": "Minimal co-platform TDM FDA-MIMO-GPR scene",
+      "materials": [
+        "#material: 6 0.01 1 0 soil",
+        "#material: 1 0 1 0 air"
+      ],
+      "geometry": [
+        "#box: 0 0 0 0.60 0.40 0.14 soil"
+      ],
+      "geometry_view": true
+    },
+    "variants": [
+      {
+        "name": "target",
+        "geometry": [
+          "#sphere: 0.30 0.20 0.08 0.025 pec"
+        ],
+        "metadata": {}
+      },
+      {
+        "name": "background",
+        "geometry": [],
+        "metadata": {}
+      }
+    ],
+    "execution": {
+      "executable": [
+        "python",
+        "-m",
+        "gprMax"
+      ],
+      "extra_args": [],
+      "gpu": [],
+      "mpi": null,
+      "omp_threads": 4,
+      "failure_policy": "stop"
+    },
+    "output": {
+      "root": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs",
+      "export_npz": true,
+      "diagnostics": true,
+      "valid_band_threshold": 0.001,
+      "eta": 1e-12,
+      "frequency_range": [
+        0.0,
+        3000000000.0
+      ],
+      "window": "hann"
+    },
+    "config_checksum": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3"
+  },
+  "render_plan": {
+    "scenario_name": "scene_001_minimal",
+    "variant": "target",
+    "run_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run",
+    "config_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/config",
+    "raw_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/raw",
+    "logs_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/logs",
+    "processed_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/processed",
+    "figures_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/figures",
+    "config_checksum": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+    "geometry_only_command_hint": [
+      "python",
+      "-m",
+      "gprMax",
+      "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/config/generated_tx_000.in",
+      "--geometry-only"
+    ],
+    "inputs": [
+      {
+        "tx_index": 0,
+        "variant": "target",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/config/generated_tx_000.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/raw/tx_000.out",
+        "waveform_id": "fda_ricker_000",
+        "center_frequency": 1000000000.0,
+        "source_position": [
+          0.22,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "7136e3c320b7c4c072c0c46c487075fb0b1705869d416a3649f5a6951a4d3948"
+      },
+      {
+        "tx_index": 1,
+        "variant": "target",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/config/generated_tx_001.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/raw/tx_001.out",
+        "waveform_id": "fda_ricker_001",
+        "center_frequency": 1025000000.0,
+        "source_position": [
+          0.26,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "0755baaeda85e04b2cbcba54a3d44868d76c89894698892c5f2f6436eead8137"
+      },
+      {
+        "tx_index": 2,
+        "variant": "target",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/config/generated_tx_002.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/raw/tx_002.out",
+        "waveform_id": "fda_ricker_002",
+        "center_frequency": 1050000000.0,
+        "source_position": [
+          0.3,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "130e1c47ee28686b089fb84068a788b9b5c26c975171144f20381c941289a164"
+      },
+      {
+        "tx_index": 3,
+        "variant": "target",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/config/generated_tx_003.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_outputs/latest/01_render_contract/rendered_run/raw/tx_003.out",
+        "waveform_id": "fda_ricker_003",
+        "center_frequency": 1075000000.0,
+        "source_position": [
+          0.34,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "4b1106405b8eab1dbce2c71dc13377522d6e178fbccc725993195a9b44b2ca3b"
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "check_name": "GPR medium check",
+  "check_id": "V4",
+  "status": "pass",
+  "main_metric": 0.9964880193357843,
+  "threshold": "epsilon corr > 0.95 and sigma-energy corr < -0.8",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "epsilon_delay_correlation": 0.9983928326587356,
+    "sigma_energy_correlation": -0.9964880193357843,
+    "epsilon_values": [
+      4.0,
+      6.0,
+      9.0
+    ],
+    "sigma_values": [
+      0.001,
+      0.01,
+      0.05
+    ]
+  },
+  "artifacts": {
+    "epsilon_delay_trend.png": "V4_gpr_medium/figures/epsilon_delay_trend.png",
+    "conductivity_attenuation_trend.png": "V4_gpr_medium/figures/conductivity_attenuation_trend.png",
+    "medium_sweep_summary.csv": "V4_gpr_medium/reports/medium_sweep_summary.csv"
+  },
+  "notes": "",
+  "errors": []
+}

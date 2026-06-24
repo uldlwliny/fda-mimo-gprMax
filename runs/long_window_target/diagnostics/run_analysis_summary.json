@@ -1,0 +1,342 @@
+{
+  "scene": "long_window_target",
+  "decision": "ACCEPTED_FOR_REAL_FULLWAVE_TARGET_SNAPSHOT",
+  "variants": {
+    "target": {
+      "path": "runs/long_window_target/target",
+      "has_raw": true,
+      "raw_count": 4,
+      "has_processed": true,
+      "has_npz": true,
+      "has_config": true,
+      "config_count": 4,
+      "run_stage": "real",
+      "logs_count": 4,
+      "tensor": {
+        "time_traces_shape": [
+          4,
+          4,
+          6233
+        ],
+        "frequency_tensor_raw_shape": [
+          4,
+          4,
+          121
+        ],
+        "frequency_tensor_cal_shape": [
+          4,
+          4,
+          121
+        ],
+        "nan_count_cal": 40,
+        "channel_energy": [
+          [
+            290541.65625,
+            3576.343505859375,
+            743.8203735351562,
+            329.6942443847656
+          ],
+          [
+            15668.53125,
+            257510.234375,
+            3139.911376953125,
+            675.556640625
+          ],
+          [
+            1129.14013671875,
+            13949.4794921875,
+            230263.40625,
+            2793.165283203125
+          ],
+          [
+            393.88165283203125,
+            1028.967529296875,
+            12534.12109375,
+            207514.296875
+          ]
+        ],
+        "peak_time_index": [
+          [
+            284,
+            203,
+            201,
+            268
+          ],
+          [
+            189,
+            262,
+            187,
+            185
+          ],
+          [
+            172,
+            176,
+            244,
+            173
+          ],
+          [
+            214,
+            160,
+            164,
+            228
+          ]
+        ]
+      },
+      "log_summaries": [
+        {
+          "tx_index": 0,
+          "path": "runs/long_window_target/target/logs/gprmax_stdout_tx_000.txt",
+          "gprmax_version": "3.1.7 (Big Smoke)",
+          "domain_size": [
+            0.6,
+            0.4,
+            0.3
+          ],
+          "grid_cells": [
+            60,
+            40,
+            30
+          ],
+          "spatial_step": [
+            0.01,
+            0.01,
+            0.01
+          ],
+          "time_window_s": 1.2e-07,
+          "iterations": 6233,
+          "waveform_frequency_hz": 300000000.0,
+          "warnings": [],
+          "numerical_dispersion_warning": true,
+          "max_phase_velocity_error_percent": -0.52,
+          "dispersion_risk": "LOW"
+        },
+        {
+          "tx_index": 1,
+          "path": "runs/long_window_target/target/logs/gprmax_stdout_tx_001.txt",
+          "gprmax_version": "3.1.7 (Big Smoke)",
+          "domain_size": [
+            0.6,
+            0.4,
+            0.3
+          ],
+          "grid_cells": [
+            60,
+            40,
+            30
+          ],
+          "spatial_step": [
+            0.01,
+            0.01,
+            0.01
+          ],
+          "time_window_s": 1.2e-07,
+          "iterations": 6233,
+          "waveform_frequency_hz": 325000000.0,
+          "warnings": [],
+          "numerical_dispersion_warning": true,
+          "max_phase_velocity_error_percent": -0.6,
+          "dispersion_risk": "LOW"
+        },
+        {
+          "tx_index": 2,
+          "path": "runs/long_window_target/target/logs/gprmax_stdout_tx_002.txt",
+          "gprmax_version": "3.1.7 (Big Smoke)",
+          "domain_size": [
+            0.6,
+            0.4,
+            0.3
+          ],
+          "grid_cells": [
+            60,
+            40,
+            30
+          ],
+          "spatial_step": [
+            0.01,
+            0.01,
+            0.01
+          ],
+          "time_window_s": 1.2e-07,
+          "iterations": 6233,
+          "waveform_frequency_hz": 350000000.0,
+          "warnings": [],
+          "numerical_dispersion_warning": true,
+          "max_phase_velocity_error_percent": -0.71,
+          "dispersion_risk": "LOW"
+        },
+        {
+          "tx_index": 3,
+          "path": "runs/long_window_target/target/logs/gprmax_stdout_tx_003.txt",
+          "gprmax_version": "3.1.7 (Big Smoke)",
+          "domain_size": [
+            0.6,
+            0.4,
+            0.3
+          ],
+          "grid_cells": [
+            60,
+            40,
+            30
+          ],
+          "spatial_step": [
+            0.01,
+            0.01,
+            0.01
+          ],
+          "time_window_s": 1.2e-07,
+          "iterations": 6233,
+          "waveform_frequency_hz": 375000000.0,
+          "warnings": [],
+          "numerical_dispersion_warning": true,
+          "max_phase_velocity_error_percent": -0.81,
+          "dispersion_risk": "LOW"
+        }
+      ],
+      "numerical_dispersion": {
+        "warning": true,
+        "risk": "LOW",
+        "max_abs_phase_velocity_error_percent": 0.81,
+        "warnings": []
+      }
+    },
+    "background": {
+      "path": "runs/long_window_target/background",
+      "has_raw": false,
+      "raw_count": 0,
+      "has_processed": false,
+      "has_npz": false,
+      "has_config": false,
+      "config_count": 0,
+      "run_stage": "absent",
+      "logs_count": 0,
+      "tensor": {},
+      "log_summaries": [],
+      "numerical_dispersion": {
+        "warning": false,
+        "risk": "UNKNOWN",
+        "max_abs_phase_velocity_error_percent": null,
+        "warnings": []
+      }
+    }
+  },
+  "tensor": {
+    "time_traces_shape": [
+      4,
+      4,
+      6233
+    ],
+    "frequency_tensor_raw_shape": [
+      4,
+      4,
+      121
+    ],
+    "frequency_tensor_cal_shape": [
+      4,
+      4,
+      121
+    ],
+    "nan_count_cal": 40,
+    "channel_energy": [
+      [
+        290541.65625,
+        3576.343505859375,
+        743.8203735351562,
+        329.6942443847656
+      ],
+      [
+        15668.53125,
+        257510.234375,
+        3139.911376953125,
+        675.556640625
+      ],
+      [
+        1129.14013671875,
+        13949.4794921875,
+        230263.40625,
+        2793.165283203125
+      ],
+      [
+        393.88165283203125,
+        1028.967529296875,
+        12534.12109375,
+        207514.296875
+      ]
+    ],
+    "peak_time_index": [
+      [
+        284,
+        203,
+        201,
+        268
+      ],
+      [
+        189,
+        262,
+        187,
+        185
+      ],
+      [
+        172,
+        176,
+        244,
+        173
+      ],
+      [
+        214,
+        160,
+        164,
+        228
+      ]
+    ]
+  },
+  "fda": {
+    "status": "PASS-CONFIG",
+    "spectral_status": "PASS-SPECTRAL",
+    "configured_center_frequencies_hz": [
+      300000000.0,
+      325000000.0,
+      350000000.0,
+      375000000.0
+    ],
+    "delta_f_hz": 25000000.0,
+    "law_max_error_hz": 0.0,
+    "measured_spectral_peaks_hz": [
+      299907070.1644556,
+      324899326.01149356,
+      349891581.8585315,
+      374883837.70556945
+    ],
+    "fft_bin_spacing_hz": 8330751.949012637,
+    "fft_resolution_ratio": 0.33323007796050547,
+    "can_resolve_fda_step_by_fft": true
+  },
+  "coordinates": {
+    "actual_positions_available": true,
+    "max_requested_actual_tx_error_m": 0.0,
+    "max_requested_actual_rx_error_m": 0.0,
+    "grid_quantization_warning": false,
+    "grid_spacing_min_m": 0.01
+  },
+  "numerical_dispersion": {
+    "max_abs_phase_velocity_error_percent": 0.81,
+    "risk": "LOW",
+    "warning": true,
+    "warnings": []
+  },
+  "scatter": {
+    "present": false
+  },
+  "real_run_checks": {
+    "V1": "PASS-CONFIG:PASS-SPECTRAL",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "PASS_WITH_WARNINGS",
+    "V5": "NOT_EVALUATED_REQUIRES_DF_ZERO_BASELINE",
+    "V6": "NOT_EVALUATED_REQUIRES_DEPTH_SWEEP",
+    "V7": "NOT_EVALUATED_REQUIRES_DICTIONARY_CANDIDATES",
+    "V8": "NOT_EVALUATED_REQUIRES_RANDOM_MEDIUM_ENSEMBLE"
+  },
+  "recommended_next_actions": [
+    "run background variant"
+  ]
+}

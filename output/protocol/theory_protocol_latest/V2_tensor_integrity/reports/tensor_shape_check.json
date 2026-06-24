@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "time_traces_shape": [
+    4,
+    4,
+    64
+  ],
+  "frequency_tensor_raw_shape": [
+    4,
+    4,
+    33
+  ],
+  "nt": 4,
+  "nr": 4,
+  "missing": [],
+  "shape_ok": true
+}

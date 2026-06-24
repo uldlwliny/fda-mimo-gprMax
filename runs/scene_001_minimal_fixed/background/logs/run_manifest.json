@@ -1,0 +1,468 @@
+{
+  "stage": "complete",
+  "scenario": {
+    "name": "scene_001_minimal",
+    "random_seed": 20260606,
+    "domain": {
+      "size": [
+        0.6,
+        0.4,
+        0.3
+      ]
+    },
+    "grid": {
+      "spacing": [
+        0.01,
+        0.01,
+        0.01
+      ]
+    },
+    "time": {
+      "window": 6e-09
+    },
+    "array": {
+      "mode": "offset",
+      "rx_offset": [
+        0.005,
+        0.0,
+        0.0
+      ],
+      "polarization": "z",
+      "tx_positions": [
+        [
+          0.22,
+          0.16,
+          0.15
+        ],
+        [
+          0.26,
+          0.16,
+          0.15
+        ],
+        [
+          0.3,
+          0.16,
+          0.15
+        ],
+        [
+          0.34,
+          0.16,
+          0.15
+        ]
+      ],
+      "rx_positions": [
+        [
+          0.225,
+          0.16,
+          0.15
+        ],
+        [
+          0.265,
+          0.16,
+          0.15
+        ],
+        [
+          0.305,
+          0.16,
+          0.15
+        ],
+        [
+          0.34500000000000003,
+          0.16,
+          0.15
+        ]
+      ]
+    },
+    "fda": {
+      "type": "linear",
+      "f0": 1000000000.0,
+      "df": 25000000.0,
+      "frequencies": [
+        1000000000.0,
+        1025000000.0,
+        1050000000.0,
+        1075000000.0
+      ]
+    },
+    "waveform": {
+      "mode": "builtin",
+      "shape": "ricker",
+      "amplitude": 1.0,
+      "identifier_prefix": "fda_ricker",
+      "num_samples": 0,
+      "has_time": false
+    },
+    "receiver": {
+      "component": "Ez"
+    },
+    "scene": {
+      "title": "Minimal co-platform TDM FDA-MIMO-GPR scene",
+      "materials": [
+        "#material: 6 0.01 1 0 soil",
+        "#material: 1 0 1 0 air"
+      ],
+      "geometry": [
+        "#box: 0 0 0 0.60 0.40 0.14 soil"
+      ],
+      "geometry_view": true
+    },
+    "variants": [
+      {
+        "name": "target",
+        "geometry": [
+          "#sphere: 0.30 0.20 0.08 0.025 pec"
+        ],
+        "metadata": {}
+      },
+      {
+        "name": "background",
+        "geometry": [],
+        "metadata": {}
+      }
+    ],
+    "execution": {
+      "executable": [
+        "python",
+        "-m",
+        "gprMax"
+      ],
+      "extra_args": [],
+      "gpu": [],
+      "mpi": null,
+      "omp_threads": 4,
+      "failure_policy": "stop"
+    },
+    "output": {
+      "root": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs",
+      "export_npz": true,
+      "diagnostics": true,
+      "valid_band_threshold": 0.001,
+      "eta": 1e-12,
+      "frequency_range": [
+        0.0,
+        3000000000.0
+      ],
+      "window": "hann"
+    },
+    "config_checksum": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3"
+  },
+  "render_plan": {
+    "scenario_name": "scene_001_minimal",
+    "variant": "background",
+    "run_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background",
+    "config_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config",
+    "raw_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw",
+    "logs_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs",
+    "processed_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/processed",
+    "figures_dir": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/figures",
+    "config_checksum": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+    "geometry_only_command_hint": [
+      "python",
+      "-m",
+      "gprMax",
+      "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_000.in",
+      "--geometry-only"
+    ],
+    "inputs": [
+      {
+        "tx_index": 0,
+        "variant": "background",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_000.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_000.out",
+        "waveform_id": "fda_ricker_000",
+        "center_frequency": 1000000000.0,
+        "source_position": [
+          0.22,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "923f13fe0390ddc7a9b3e5a288c397f1c24dbfdf9293422cbdad4171d198adca"
+      },
+      {
+        "tx_index": 1,
+        "variant": "background",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_001.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_001.out",
+        "waveform_id": "fda_ricker_001",
+        "center_frequency": 1025000000.0,
+        "source_position": [
+          0.26,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "77b45dcf65679978c3f1f5be453d73eae51b13c77a4c8f1b2240cbd3a70a75a8"
+      },
+      {
+        "tx_index": 2,
+        "variant": "background",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_002.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_002.out",
+        "waveform_id": "fda_ricker_002",
+        "center_frequency": 1050000000.0,
+        "source_position": [
+          0.3,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "539e0be71f390315bbb2cbedf6dc654c47365ac848173cfa2e3992e8950679d9"
+      },
+      {
+        "tx_index": 3,
+        "variant": "background",
+        "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_003.in",
+        "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_003.out",
+        "waveform_id": "fda_ricker_003",
+        "center_frequency": 1075000000.0,
+        "source_position": [
+          0.34,
+          0.16,
+          0.15
+        ],
+        "receiver_positions": [
+          [
+            0.225,
+            0.16,
+            0.15
+          ],
+          [
+            0.265,
+            0.16,
+            0.15
+          ],
+          [
+            0.305,
+            0.16,
+            0.15
+          ],
+          [
+            0.34500000000000003,
+            0.16,
+            0.15
+          ]
+        ],
+        "component": "Ez",
+        "excitation_path": null,
+        "checksum": "57353cb111ef28b913c6d0ae2c207b34417d34a4c3856ab851558b9931245462"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "tx_index": 0,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_000.in"
+      ],
+      "cwd": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background",
+      "env": {
+        "OMP_NUM_THREADS": "4"
+      },
+      "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_000.in",
+      "expected_output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_000.out",
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_000.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_000.txt",
+      "geometry_only": false
+    },
+    {
+      "tx_index": 1,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_001.in"
+      ],
+      "cwd": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background",
+      "env": {
+        "OMP_NUM_THREADS": "4"
+      },
+      "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_001.in",
+      "expected_output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_001.out",
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_001.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_001.txt",
+      "geometry_only": false
+    },
+    {
+      "tx_index": 2,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_002.in"
+      ],
+      "cwd": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background",
+      "env": {
+        "OMP_NUM_THREADS": "4"
+      },
+      "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_002.in",
+      "expected_output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_002.out",
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_002.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_002.txt",
+      "geometry_only": false
+    },
+    {
+      "tx_index": 3,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_003.in"
+      ],
+      "cwd": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background",
+      "env": {
+        "OMP_NUM_THREADS": "4"
+      },
+      "input_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_003.in",
+      "expected_output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_003.out",
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_003.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_003.txt",
+      "geometry_only": false
+    }
+  ],
+  "results": [
+    {
+      "tx_index": 0,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_000.in"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.7661570060008671,
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_000.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_000.txt",
+      "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_000.out",
+      "output_exists": true,
+      "output_checksum": "9320baa83a4c182fd8c8adddf4e6e3d2f1948b88c98ed9ec57168ca725962111",
+      "ok": true
+    },
+    {
+      "tx_index": 1,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_001.in"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.7657937549993221,
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_001.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_001.txt",
+      "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_001.out",
+      "output_exists": true,
+      "output_checksum": "037a7ec599c4c948a9b1c5f20ff84611f144572fb2c71cd07a5c90ce2426a1a2",
+      "ok": true
+    },
+    {
+      "tx_index": 2,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_002.in"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.7652696740005922,
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_002.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_002.txt",
+      "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_002.out",
+      "output_exists": true,
+      "output_checksum": "df56a5263243a1ff8bf148893cb5fcd6dbaf3e9c34e019c33f0768bf807ee673",
+      "ok": true
+    },
+    {
+      "tx_index": 3,
+      "command": [
+        "python",
+        "-m",
+        "gprMax",
+        "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/config/generated_tx_003.in"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.7654452150018187,
+      "stdout_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stdout_tx_003.txt",
+      "stderr_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/logs/gprmax_stderr_tx_003.txt",
+      "output_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/runs/scene_001_minimal_fixed/background/raw/tx_003.out",
+      "output_exists": true,
+      "output_checksum": "9ec6cb6e42e6d40e33d4bc601e040aa7396c00b5575a016b4125473d8c00a22c",
+      "ok": true
+    }
+  ],
+  "checksums": {
+    "manifest_basis": "ffca04cc9fb623213bd69ea1de65489cef196f51f4427337e95e16ea302c648c"
+  }
+}

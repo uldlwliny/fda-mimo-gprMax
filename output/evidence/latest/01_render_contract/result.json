@@ -1,0 +1,62 @@
+{
+  "case_name": "01_render_contract",
+  "claim": "Rendered gprMax inputs preserve TDM-MIMO source activation, all-Rx reception, and Tx-index-bound FDA frequencies.",
+  "passed": true,
+  "inputs": {
+    "scenario": "scene_001_minimal",
+    "nt": 4,
+    "nr": 4,
+    "variant": "target"
+  },
+  "metrics": {
+    "num_inputs": 4,
+    "expected_inputs": 4,
+    "rows": [
+      {
+        "tx_index": 0,
+        "active_source_count": 1,
+        "receiver_count": 4,
+        "rendered_frequency_hz": 1000000000.0,
+        "expected_frequency_hz": 1000000000.0,
+        "frequency_error_hz": 0.0,
+        "passed": true
+      },
+      {
+        "tx_index": 1,
+        "active_source_count": 1,
+        "receiver_count": 4,
+        "rendered_frequency_hz": 1025000000.0,
+        "expected_frequency_hz": 1025000000.0,
+        "frequency_error_hz": 0.0,
+        "passed": true
+      },
+      {
+        "tx_index": 2,
+        "active_source_count": 1,
+        "receiver_count": 4,
+        "rendered_frequency_hz": 1050000000.0,
+        "expected_frequency_hz": 1050000000.0,
+        "frequency_error_hz": 0.0,
+        "passed": true
+      },
+      {
+        "tx_index": 3,
+        "active_source_count": 1,
+        "receiver_count": 4,
+        "rendered_frequency_hz": 1075000000.0,
+        "expected_frequency_hz": 1075000000.0,
+        "frequency_error_hz": 0.0,
+        "passed": true
+      }
+    ]
+  },
+  "artifacts": {
+    "csv": "01_render_contract/render_contract_table.csv",
+    "table": "01_render_contract/render_contract_table.md",
+    "figure": "01_render_contract/tx_rx_fda_grid.png"
+  },
+  "errors": [],
+  "limitations": [
+    "This case validates compatibility-layer semantics and I/O contracts; it does not validate hardware-realistic FDA-MIMO-GPR physics."
+  ]
+}

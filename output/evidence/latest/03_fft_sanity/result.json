@@ -1,0 +1,25 @@
+{
+  "case_name": "03_fft_sanity",
+  "claim": "Frequency transform places a bin-aligned sinusoid peak at the expected FFT frequency bin.",
+  "passed": true,
+  "inputs": {
+    "lt": 128,
+    "dt": 1e-09,
+    "expected_bin": 8
+  },
+  "metrics": {
+    "expected_frequency_hz": 62499999.99999999,
+    "detected_frequency_hz": 62499999.99999999,
+    "frequency_error_hz": 0.0,
+    "tolerance": 1e-06
+  },
+  "artifacts": {
+    "csv": "03_fft_sanity/spectrum.csv",
+    "peak_summary": "03_fft_sanity/peak_summary.json",
+    "figure": "03_fft_sanity/fft_peak.png"
+  },
+  "errors": [],
+  "limitations": [
+    "This case validates compatibility-layer semantics and I/O contracts; it does not validate hardware-realistic FDA-MIMO-GPR physics."
+  ]
+}

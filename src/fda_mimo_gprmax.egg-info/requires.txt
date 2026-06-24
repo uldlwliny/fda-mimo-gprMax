@@ -1,0 +1,10 @@
+numpy>=1.24
+h5py>=3.8
+PyYAML>=6.0
+matplotlib>=3.7
+
+[test]
+pytest>=7.0
+
+[zarr]
+zarr>=2.16

@@ -1,0 +1,6 @@
+| tx_index | active_source_count | receiver_count | rendered_frequency_hz | expected_frequency_hz | frequency_error_hz | passed |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 1 | 4 | 1000000000.0 | 1000000000.0 | 0.0 | True |
+| 1 | 1 | 4 | 1025000000.0 | 1025000000.0 | 0.0 | True |
+| 2 | 1 | 4 | 1050000000.0 | 1050000000.0 | 0.0 | True |
+| 3 | 1 | 4 | 1075000000.0 | 1075000000.0 | 0.0 | True |

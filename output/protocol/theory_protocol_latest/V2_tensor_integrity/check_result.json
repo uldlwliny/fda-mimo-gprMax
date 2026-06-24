@@ -1,0 +1,35 @@
+{
+  "check_name": "Tensor integrity check",
+  "check_id": "V2",
+  "status": "pass",
+  "main_metric": 1.0,
+  "threshold": "all required fields present and shapes match",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "time_traces_shape": [
+      4,
+      4,
+      64
+    ],
+    "frequency_tensor_raw_shape": [
+      4,
+      4,
+      33
+    ],
+    "nt": 4,
+    "nr": 4,
+    "missing": [],
+    "shape_ok": true
+  },
+  "artifacts": {
+    "snapshot.h5": "V2_tensor_integrity/snapshot.h5",
+    "snapshot_summary.json": "V2_tensor_integrity/reports/snapshot_summary.json",
+    "tensor_shape_check.json": "V2_tensor_integrity/reports/tensor_shape_check.json",
+    "metadata_check.json": "V2_tensor_integrity/reports/metadata_check.json"
+  },
+  "notes": "",
+  "errors": []
+}

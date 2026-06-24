@@ -1,0 +1,273 @@
+{
+  "output_root": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest",
+  "accepted": true,
+  "decision": {
+    "accepted": true,
+    "mandatory_passed": true,
+    "v5_at_least_warning": true,
+    "enhanced_pass_count": 2,
+    "enhanced_required": 0,
+    "blocking_checks": [],
+    "paper_mode": false
+  },
+  "results": [
+    {
+      "check_name": "Source FDA law check",
+      "check_id": "V1",
+      "status": "pass",
+      "main_metric": 599315.0684931278,
+      "threshold": 2323874.755381584,
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "max_frequency_error_hz": 599315.0684931278,
+        "fft_bin_hz": 1161937.377690792,
+        "rows": [
+          {
+            "tx_index": 0,
+            "f_hat_hz": 999816536.2035224,
+            "expected_hz": 1000000000.0,
+            "e_m_hz": -183463.79647755623,
+            "d_m_hz": 562622.3091976643
+          },
+          {
+            "tx_index": 1,
+            "f_hat_hz": 1025379158.5127201,
+            "expected_hz": 1025000000.0,
+            "e_m_hz": 379158.51272010803,
+            "d_m_hz": -599315.0684931278
+          },
+          {
+            "tx_index": 2,
+            "f_hat_hz": 1049779843.444227,
+            "expected_hz": 1050000000.0,
+            "e_m_hz": -220156.5557730198,
+            "d_m_hz": 562622.3091976643
+          },
+          {
+            "tx_index": 3,
+            "f_hat_hz": 1075342465.7534246,
+            "expected_hz": 1075000000.0,
+            "e_m_hz": 342465.75342464447,
+            "d_m_hz": 0.0
+          }
+        ]
+      },
+      "artifacts": {
+        "source_spectra.png": "V1_source_fda_law/figures/source_spectra.png",
+        "source_fda_law.csv": "V1_source_fda_law/reports/source_fda_law.csv",
+        "check_result": "V1_source_fda_law/check_result.json",
+        "source_fda_law_check.json": "V1_source_fda_law/reports/source_fda_law_check.json"
+      },
+      "notes": "Source spectra are reconstructed deterministically from the configured FDA law for protocol validation.",
+      "errors": []
+    },
+    {
+      "check_name": "Tensor integrity check",
+      "check_id": "V2",
+      "status": "pass",
+      "main_metric": 1.0,
+      "threshold": "all required fields present and shapes match",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "time_traces_shape": [
+          4,
+          4,
+          64
+        ],
+        "frequency_tensor_raw_shape": [
+          4,
+          4,
+          33
+        ],
+        "nt": 4,
+        "nr": 4,
+        "missing": [],
+        "shape_ok": true
+      },
+      "artifacts": {
+        "snapshot.h5": "V2_tensor_integrity/snapshot.h5",
+        "snapshot_summary.json": "V2_tensor_integrity/reports/snapshot_summary.json",
+        "tensor_shape_check.json": "V2_tensor_integrity/reports/tensor_shape_check.json",
+        "metadata_check.json": "V2_tensor_integrity/reports/metadata_check.json",
+        "check_result": "V2_tensor_integrity/check_result.json",
+        "tensor_integrity_check.json": "V2_tensor_integrity/reports/tensor_integrity_check.json"
+      },
+      "notes": "",
+      "errors": []
+    },
+    {
+      "check_name": "MIMO geometry check",
+      "check_id": "V3",
+      "status": "pass",
+      "main_metric": 0.854812534811656,
+      "threshold": "> 0.5 and channels not copied",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "path_arrival_correlation": 0.854812534811656,
+        "energy_std": 3.3797221183776855,
+        "copied_channels": false
+      },
+      "artifacts": {
+        "channel_energy_matrix.png": "V3_mimo_geometry/figures/channel_energy_matrix.png",
+        "arrival_time_matrix.png": "V3_mimo_geometry/figures/arrival_time_matrix.png",
+        "path_length_vs_arrival_time.png": "V3_mimo_geometry/figures/path_length_vs_arrival_time.png",
+        "metrics.csv": "V3_mimo_geometry/reports/mimo_geometry_metrics.csv",
+        "check_result": "V3_mimo_geometry/check_result.json",
+        "mimo_geometry_check.json": "V3_mimo_geometry/reports/mimo_geometry_check.json"
+      },
+      "notes": "",
+      "errors": []
+    },
+    {
+      "check_name": "GPR medium check",
+      "check_id": "V4",
+      "status": "pass",
+      "main_metric": 0.9964880193357843,
+      "threshold": "epsilon corr > 0.95 and sigma-energy corr < -0.8",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "epsilon_delay_correlation": 0.9983928326587356,
+        "sigma_energy_correlation": -0.9964880193357843,
+        "epsilon_values": [
+          4.0,
+          6.0,
+          9.0
+        ],
+        "sigma_values": [
+          0.001,
+          0.01,
+          0.05
+        ]
+      },
+      "artifacts": {
+        "epsilon_delay_trend.png": "V4_gpr_medium/figures/epsilon_delay_trend.png",
+        "conductivity_attenuation_trend.png": "V4_gpr_medium/figures/conductivity_attenuation_trend.png",
+        "medium_sweep_summary.csv": "V4_gpr_medium/reports/medium_sweep_summary.csv",
+        "check_result": "V4_gpr_medium/check_result.json",
+        "gpr_medium_check.json": "V4_gpr_medium/reports/gpr_medium_check.json"
+      },
+      "notes": "",
+      "errors": []
+    },
+    {
+      "check_name": "FDA degeneracy check",
+      "check_id": "V5",
+      "status": "pass",
+      "main_metric": 0.6839168528531331,
+      "threshold": "> 0.05 pass; > 0.01 warning",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "D_Y": 0.6839168528531331,
+        "D_Y_cal": 0.6728740426343415,
+        "status_rule": "D_Y > 0.05 pass; >0.01 warning"
+      },
+      "artifacts": {
+        "fda_vs_nonfda_source_spectra.png": "V5_fda_degeneracy/figures/fda_vs_nonfda_source_spectra.png",
+        "fda_vs_nonfda_phase_difference.png": "V5_fda_degeneracy/figures/fda_vs_nonfda_phase_difference.png",
+        "fda_degeneracy_metrics.csv": "V5_fda_degeneracy/reports/fda_degeneracy_metrics.csv",
+        "check_result": "V5_fda_degeneracy/check_result.json",
+        "fda_degeneracy_check.json": "V5_fda_degeneracy/reports/fda_degeneracy_check.json"
+      },
+      "notes": "",
+      "errors": []
+    },
+    {
+      "check_name": "Depth/frequency coupling check",
+      "check_id": "V6",
+      "status": "pass",
+      "main_metric": 1.0,
+      "threshold": "arrival corr > 0.95 and phase distance > 0",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "arrival_depth_correlation": 1.0,
+        "phase_structure_distances": [
+          6.418451662132424,
+          6.4184516621324175,
+          6.41845166213242
+        ]
+      },
+      "artifacts": {
+        "depth_arrival_time_trend.png": "V6_depth_frequency_coupling/figures/depth_arrival_time_trend.png",
+        "depth_tx_phase_map.png": "V6_depth_frequency_coupling/figures/depth_tx_phase_map.png",
+        "depth_frequency_coupling_metrics.csv": "V6_depth_frequency_coupling/reports/depth_frequency_coupling_metrics.csv",
+        "check_result": "V6_depth_frequency_coupling/check_result.json",
+        "depth_frequency_coupling_check.json": "V6_depth_frequency_coupling/reports/depth_frequency_coupling_check.json"
+      },
+      "notes": "",
+      "errors": []
+    },
+    {
+      "check_name": "Dictionary non-equivalence check",
+      "check_id": "V7",
+      "status": "warning",
+      "main_metric": 0.04818935112003387,
+      "threshold": "> 0.05 pass; > 0.01 warning",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "D_mu": 0.04818935112003387,
+        "num_candidates": 5
+      },
+      "artifacts": {
+        "coherence_matrix_fda.png": "V7_dictionary_non_equivalence/figures/coherence_matrix_fda.png",
+        "coherence_matrix_nonfda.png": "V7_dictionary_non_equivalence/figures/coherence_matrix_nonfda.png",
+        "coherence_difference.png": "V7_dictionary_non_equivalence/figures/coherence_difference.png",
+        "dictionary_non_equivalence_metrics.csv": "V7_dictionary_non_equivalence/reports/dictionary_non_equivalence_metrics.csv",
+        "check_result": "V7_dictionary_non_equivalence/check_result.json",
+        "dictionary_non_equivalence_check.json": "V7_dictionary_non_equivalence/reports/dictionary_non_equivalence_check.json"
+      },
+      "notes": "",
+      "errors": []
+    },
+    {
+      "check_name": "Random-medium covariance check",
+      "check_id": "V8",
+      "status": "pass",
+      "main_metric": 0.975382842744228,
+      "threshold": "> 0.20 pass; > 0.10 warning",
+      "scene_id": "scene_001_minimal",
+      "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+      "gprmax_version": "synthetic",
+      "adapter_version": "0.1.0",
+      "metrics": {
+        "rho_off": 0.975382842744228,
+        "samples": 12,
+        "dimension": 96
+      },
+      "artifacts": {
+        "covariance_heatmap.png": "V8_random_medium_covariance/figures/covariance_heatmap.png",
+        "covariance_block_summary.png": "V8_random_medium_covariance/figures/covariance_block_summary.png",
+        "random_medium_covariance_metrics.csv": "V8_random_medium_covariance/reports/random_medium_covariance_metrics.csv",
+        "covariance_block_summary.csv": "V8_random_medium_covariance/reports/covariance_block_summary.csv",
+        "check_result": "V8_random_medium_covariance/check_result.json",
+        "random_medium_covariance_check.json": "V8_random_medium_covariance/reports/random_medium_covariance_check.json"
+      },
+      "notes": "",
+      "errors": []
+    }
+  ],
+  "artifacts": {
+    "summary": "first_stage_summary.json",
+    "report": "first_stage_protocol_report.md"
+  }
+}

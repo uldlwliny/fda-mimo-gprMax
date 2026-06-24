@@ -1,0 +1,23 @@
+{
+  "case_name": "05_background_subtraction",
+  "claim": "Target/background subtraction recovers known scatter tensors and rejects incompatible axes.",
+  "passed": true,
+  "inputs": {
+    "nt": 4,
+    "nr": 4,
+    "kf": 10
+  },
+  "metrics": {
+    "max_scatter_error": 1.2287812012345967e-07,
+    "incompatible_rejected": true,
+    "tolerance": 1e-06
+  },
+  "artifacts": {
+    "csv": "05_background_subtraction/scatter_slice_k0.csv",
+    "figure": "05_background_subtraction/scatter_recovery.png"
+  },
+  "errors": [],
+  "limitations": [
+    "This case validates compatibility-layer semantics and I/O contracts; it does not validate hardware-realistic FDA-MIMO-GPR physics."
+  ]
+}

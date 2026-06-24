@@ -1,0 +1,36 @@
+{
+  "time_traces_shape": [
+    4,
+    4,
+    313
+  ],
+  "frequency_tensor_raw_shape": [
+    4,
+    4,
+    19
+  ],
+  "source_spectra_shape": [
+    4,
+    19
+  ],
+  "valid_fraction": 0.9473684210526315,
+  "frequency_min": 0.0,
+  "frequency_max": 2986135412.6758013,
+  "fft_bin_spacing_hz": 165896411.81532228,
+  "fda_delta_f_hz": 25000000.0,
+  "fft_resolution_ratio": 6.6358564726128915,
+  "can_resolve_fda_step_by_fft": false,
+  "actual_positions_available": true,
+  "max_requested_actual_rx_error_m": 0.0050000000000000044,
+  "numerical_dispersion": {
+    "warning": true,
+    "risk": "HIGH",
+    "max_abs_phase_velocity_error_percent": 8.27,
+    "warnings": [
+      "WARNING: Potentially significant numerical dispersion. Estimated largest physical phase-velocity error is -7.15% in material 'soil' whose wavelength sampled by 4 cells. Maximum significant frequency estimated as 2.82024e+09Hz",
+      "WARNING: Potentially significant numerical dispersion. Estimated largest physical phase-velocity error is -8.27% in material 'soil' whose wavelength sampled by 4 cells. Maximum significant frequency estimated as 2.98614e+09Hz",
+      "WARNING: Potentially significant numerical dispersion. Estimated largest physical phase-velocity error is -8.27% in material 'soil' whose wavelength sampled by 4 cells. Maximum significant frequency estimated as 2.98614e+09Hz",
+      "WARNING: Potentially significant numerical dispersion. Estimated largest physical phase-velocity error is -8.27% in material 'soil' whose wavelength sampled by 4 cells. Maximum significant frequency estimated as 2.98614e+09Hz"
+    ]
+  }
+}

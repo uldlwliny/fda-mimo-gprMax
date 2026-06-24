@@ -1,0 +1,26 @@
+{
+  "check_name": "Depth/frequency coupling check",
+  "check_id": "V6",
+  "status": "pass",
+  "main_metric": 1.0,
+  "threshold": "arrival corr > 0.95 and phase distance > 0",
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "arrival_depth_correlation": 1.0,
+    "phase_structure_distances": [
+      6.418451662132424,
+      6.4184516621324175,
+      6.41845166213242
+    ]
+  },
+  "artifacts": {
+    "depth_arrival_time_trend.png": "V6_depth_frequency_coupling/figures/depth_arrival_time_trend.png",
+    "depth_tx_phase_map.png": "V6_depth_frequency_coupling/figures/depth_tx_phase_map.png",
+    "depth_frequency_coupling_metrics.csv": "V6_depth_frequency_coupling/reports/depth_frequency_coupling_metrics.csv"
+  },
+  "notes": "",
+  "errors": []
+}

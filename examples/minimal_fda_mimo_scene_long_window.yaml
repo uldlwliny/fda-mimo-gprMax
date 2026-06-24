@@ -1,0 +1,64 @@
+name: scene_001_minimal_long_window
+random_seed: 20260606
+output:
+  root: ../runs
+  export_npz: true
+  diagnostics: true
+  valid_band_threshold: 0.001
+  eta: 1.0e-12
+  frequency_range: [0.0, 1.0e9]
+  window: hann
+
+domain:
+  size: [0.60, 0.40, 0.30]
+grid:
+  spacing: [0.01, 0.01, 0.01]
+time:
+  # Longer window improves FFT bin spacing from ~166 MHz to ~8.3 MHz.
+  window: 1.2e-7
+
+scene:
+  title: Long-window grid-aligned co-platform TDM FDA-MIMO-GPR scene
+  materials:
+    - "#material: 6 0.01 1 0 soil"
+    - "#material: 1 0 1 0 air"
+  geometry:
+    - "#box: 0 0 0 0.60 0.40 0.14 soil"
+  geometry_view: true
+
+array:
+  mode: offset
+  # Grid-aligned offset avoids requested/actual coordinate mismatch at dx=0.01 m.
+  rx_offset: [0.01, 0.0, 0.0]
+  polarization: z
+  tx_positions:
+    - [0.22, 0.16, 0.15]
+    - [0.26, 0.16, 0.15]
+    - [0.30, 0.16, 0.15]
+    - [0.34, 0.16, 0.15]
+
+fda:
+  type: linear
+  f0: 3.0e8
+  df: 2.5e7
+
+waveform:
+  mode: builtin
+  shape: ricker
+  amplitude: 1.0
+  identifier_prefix: fda_ricker_long
+
+receiver:
+  component: Ez
+
+variants:
+  target:
+    geometry:
+      - "#sphere: 0.30 0.20 0.08 0.025 pec"
+  background:
+    geometry: []
+
+execution:
+  executable: ["python", "-m", "gprMax"]
+  omp_threads: 4
+  failure_policy: stop

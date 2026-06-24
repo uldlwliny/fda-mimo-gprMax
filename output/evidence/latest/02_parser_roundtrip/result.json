@@ -1,0 +1,28 @@
+{
+  "case_name": "02_parser_roundtrip",
+  "claim": "Synthetic gprMax-like HDF5 receiver datasets map to the expected Y_t[Tx,Rx,time] tensor indices.",
+  "passed": true,
+  "inputs": {
+    "nt": 4,
+    "nr": 4,
+    "lt": 16,
+    "component": "Ez"
+  },
+  "metrics": {
+    "max_abs_error": 0.0,
+    "tensor_shape": [
+      4,
+      4,
+      16
+    ],
+    "tolerance": 1e-06
+  },
+  "artifacts": {
+    "csv": "02_parser_roundtrip/yt_slice_l0.csv",
+    "figure": "02_parser_roundtrip/yt_index_map.png"
+  },
+  "errors": [],
+  "limitations": [
+    "This case validates compatibility-layer semantics and I/O contracts; it does not validate hardware-realistic FDA-MIMO-GPR physics."
+  ]
+}

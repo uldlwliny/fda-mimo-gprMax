@@ -1,0 +1,53 @@
+{
+  "protocol": "theory_validation_protocol",
+  "scenario": "scene_001_minimal",
+  "checks": [
+    "V1",
+    "V2",
+    "V3"
+  ],
+  "items": [
+    {
+      "scenario_id": "protocol_v1_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V1"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest_plan/V1_source_fda_law/configs/protocol_v1_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest_plan/V1_source_fda_law/processed/snapshot.h5",
+      "config_hash": "0bbc5f36e190e7c779b6d75876f02753c8999e06114f4b22e2a09c4542d89889",
+      "metadata": {
+        "description": "homogeneous half-space + single target"
+      }
+    },
+    {
+      "scenario_id": "protocol_v2_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V2"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest_plan/V2_tensor_integrity/configs/protocol_v2_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest_plan/V2_tensor_integrity/processed/snapshot.h5",
+      "config_hash": "a1b49f9853f530cf9062eb7295d2112716ebf76fd582548e061b4098e54fc889",
+      "metadata": {
+        "description": "homogeneous half-space + single target"
+      }
+    },
+    {
+      "scenario_id": "protocol_v3_A_fda_target",
+      "family": "A",
+      "variant": "fda_target",
+      "check_ids": [
+        "V3"
+      ],
+      "config_path": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest_plan/V3_mimo_geometry/configs/protocol_v3_A_fda_target.yaml",
+      "expected_snapshot": "/home/ul/Windows/Documents/Work/phd/studies/data-fda_mimo_gpr/Simulation/validation_runs/theory_protocol_latest_plan/V3_mimo_geometry/processed/snapshot.h5",
+      "config_hash": "3447b6a78341d30707cc5b456d449cf557a3dec8c1f5baedc4c04ab7bedd1322",
+      "metadata": {
+        "description": "homogeneous half-space + single target"
+      }
+    }
+  ]
+}

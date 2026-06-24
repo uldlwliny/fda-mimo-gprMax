@@ -1,0 +1,51 @@
+{
+  "check_name": "Source FDA law check",
+  "check_id": "V1",
+  "status": "pass",
+  "main_metric": 599315.0684931278,
+  "threshold": 2323874.755381584,
+  "scene_id": "scene_001_minimal",
+  "config_hash": "9fe701c9418965877110291addcfe50b1fea50108438652fa4a1fb3d163082f3",
+  "gprmax_version": "synthetic",
+  "adapter_version": "0.1.0",
+  "metrics": {
+    "max_frequency_error_hz": 599315.0684931278,
+    "fft_bin_hz": 1161937.377690792,
+    "rows": [
+      {
+        "tx_index": 0,
+        "f_hat_hz": 999816536.2035224,
+        "expected_hz": 1000000000.0,
+        "e_m_hz": -183463.79647755623,
+        "d_m_hz": 562622.3091976643
+      },
+      {
+        "tx_index": 1,
+        "f_hat_hz": 1025379158.5127201,
+        "expected_hz": 1025000000.0,
+        "e_m_hz": 379158.51272010803,
+        "d_m_hz": -599315.0684931278
+      },
+      {
+        "tx_index": 2,
+        "f_hat_hz": 1049779843.444227,
+        "expected_hz": 1050000000.0,
+        "e_m_hz": -220156.5557730198,
+        "d_m_hz": 562622.3091976643
+      },
+      {
+        "tx_index": 3,
+        "f_hat_hz": 1075342465.7534246,
+        "expected_hz": 1075000000.0,
+        "e_m_hz": 342465.75342464447,
+        "d_m_hz": 0.0
+      }
+    ]
+  },
+  "artifacts": {
+    "source_spectra.png": "V1_source_fda_law/figures/source_spectra.png",
+    "source_fda_law.csv": "V1_source_fda_law/reports/source_fda_law.csv"
+  },
+  "notes": "Source spectra are reconstructed deterministically from the configured FDA law for protocol validation.",
+  "errors": []
+}

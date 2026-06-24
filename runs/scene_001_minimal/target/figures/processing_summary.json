@@ -1,0 +1,19 @@
+{
+  "time_traces_shape": [
+    4,
+    4,
+    313
+  ],
+  "frequency_tensor_raw_shape": [
+    4,
+    4,
+    19
+  ],
+  "source_spectra_shape": [
+    4,
+    19
+  ],
+  "valid_fraction": 0.9473684210526315,
+  "frequency_min": 0.0,
+  "frequency_max": 2986135412.6758013
+}
