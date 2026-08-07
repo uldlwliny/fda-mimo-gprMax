@@ -11,6 +11,7 @@ import re
 import warnings
 from dataclasses import dataclass
 from typing import Any, Mapping, Tuple
+from scipy.optimize import nnls
 
 import numpy as np
 
@@ -101,10 +102,14 @@ class ColeColeMedium:
     def __post_init__(self) -> None:
         material_id = str(self.material_id).strip()
         if not material_id or not _MATERIAL_ID_RE.match(material_id):
-            raise ValueError("media.materials.<id> must be a non-empty gprMax-compatible material id")
+            raise ValueError(
+                "media.materials.<id> must be a non-empty gprMax-compatible material id"
+            )
         values = {
             "eps_s": _finite_float(self.eps_s, f"media.materials.{material_id}.eps_s"),
-            "eps_inf": _finite_float(self.eps_inf, f"media.materials.{material_id}.eps_inf"),
+            "eps_inf": _finite_float(
+                self.eps_inf, f"media.materials.{material_id}.eps_inf"
+            ),
             "tau": _finite_float(self.tau, f"media.materials.{material_id}.tau"),
             "alpha": _finite_float(self.alpha, f"media.materials.{material_id}.alpha"),
             "sigma": _finite_float(self.sigma, f"media.materials.{material_id}.sigma"),
@@ -118,7 +123,9 @@ class ColeColeMedium:
         if values["tau"] <= 0:
             raise ValueError(f"media.materials.{material_id}.tau must be > 0")
         if not (0 <= values["alpha"] < 1):
-            raise ValueError(f"media.materials.{material_id}.alpha must satisfy 0 <= alpha < 1")
+            raise ValueError(
+                f"media.materials.{material_id}.alpha must satisfy 0 <= alpha < 1"
+            )
         if values["sigma"] < 0:
             raise ValueError(f"media.materials.{material_id}.sigma must be >= 0")
         object.__setattr__(self, "material_id", material_id)
@@ -163,8 +170,12 @@ class DebyeApproximation:
             "delta_eps": list(self.delta_eps),
             "tau": list(self.tau),
             "n_poles": len(self.delta_eps),
-            "fit_frequency_min_hz": min(self.fit_frequencies_hz) if self.fit_frequencies_hz else None,
-            "fit_frequency_max_hz": max(self.fit_frequencies_hz) if self.fit_frequencies_hz else None,
+            "fit_frequency_min_hz": (
+                min(self.fit_frequencies_hz) if self.fit_frequencies_hz else None
+            ),
+            "fit_frequency_max_hz": (
+                max(self.fit_frequencies_hz) if self.fit_frequencies_hz else None
+            ),
             "fit_num_frequencies": len(self.fit_frequencies_hz),
             "max_rel_error": self.max_rel_error,
             "rms_rel_error": self.rms_rel_error,
@@ -210,13 +221,17 @@ def debye_complex_permittivity(
         raise ValueError("freq_hz must contain positive finite frequencies")
     omega = 2.0 * np.pi * freq
     out = np.full(freq.shape, complex(eps_inf), dtype=complex)
-    for de, tq in zip(np.asarray(delta_eps, dtype=float), np.asarray(tau, dtype=float), strict=True):
+    for de, tq in zip(
+        np.asarray(delta_eps, dtype=float), np.asarray(tau, dtype=float), strict=True
+    ):
         out = out + de / (1.0 + 1j * omega * tq)
     out = out + sigma / (1j * omega * EPSILON_0)
     return out
 
 
-def complex_wavenumber_from_epsilon(freq_hz: np.ndarray | float, epsilon_r: np.ndarray) -> np.ndarray:
+def complex_wavenumber_from_epsilon(
+    freq_hz: np.ndarray | float, epsilon_r: np.ndarray
+) -> np.ndarray:
     """Return complex wavenumber k = omega / c0 * sqrt(epsilon_r)."""
 
     freq = np.asarray(freq_hz, dtype=float)
@@ -226,11 +241,25 @@ def complex_wavenumber_from_epsilon(freq_hz: np.ndarray | float, epsilon_r: np.n
     return omega / C0 * np.sqrt(epsilon_r)
 
 
-def _default_tau_grid(medium: ColeColeMedium, frequencies: np.ndarray, n_poles: int, tau_min: float | None, tau_max: float | None) -> np.ndarray:
+def _default_tau_grid(
+    medium: ColeColeMedium,
+    frequencies: np.ndarray,
+    n_poles: int,
+    tau_min: float | None,
+    tau_max: float | None,
+) -> np.ndarray:
     f_min = float(np.min(frequencies))
     f_max = float(np.max(frequencies))
-    lo = float(tau_min) if tau_min is not None else min(medium.tau / 100.0, 1.0 / (2.0 * np.pi * f_max * 100.0))
-    hi = float(tau_max) if tau_max is not None else max(medium.tau * 100.0, 100.0 / (2.0 * np.pi * f_min))
+    lo = (
+        float(tau_min)
+        if tau_min is not None
+        else min(medium.tau / 100.0, 1.0 / (2.0 * np.pi * f_max * 100.0))
+    )
+    hi = (
+        float(tau_max)
+        if tau_max is not None
+        else max(medium.tau * 100.0, 100.0 / (2.0 * np.pi * f_min))
+    )
     if not math.isfinite(lo) or lo <= 0:
         raise ValueError("tau_min must be positive and finite")
     if not math.isfinite(hi) or hi <= lo:
@@ -242,23 +271,26 @@ def _default_tau_grid(medium: ColeColeMedium, frequencies: np.ndarray, n_poles: 
     return grid
 
 
-def _solve_weights(a_real: np.ndarray, y_real: np.ndarray, allow_negative_weights: bool) -> np.ndarray:
+def _solve_weights(
+    a_real: np.ndarray,
+    y_real: np.ndarray,
+    allow_negative_weights: bool,
+) -> np.ndarray:
     if allow_negative_weights:
-        weights, *_ = np.linalg.lstsq(a_real, y_real, rcond=None)
-        return weights.astype(float)
-    try:
-        from scipy.optimize import nnls  # type: ignore
+        weights, *_ = np.linalg.lstsq(
+            a_real,
+            y_real,
+            rcond=None,
+        )
 
-        weights, _ = nnls(a_real, y_real)
         return weights.astype(float)
-    except Exception:
-        weights, *_ = np.linalg.lstsq(a_real, y_real, rcond=None)
-        weights = np.maximum(weights, 0.0)
-        support = weights > 0
-        if np.any(support):
-            refined, *_ = np.linalg.lstsq(a_real[:, support], y_real, rcond=None)
-            weights[support] = np.maximum(refined, 0.0)
-        return weights.astype(float)
+
+    weights, _ = nnls(
+        a_real,
+        y_real,
+    )
+
+    return weights.astype(float)
 
 
 def fit_cole_cole_to_debye(
@@ -327,7 +359,11 @@ def render_debye_material_commands(approx: DebyeApproximation) -> list[str]:
         raise ValueError("Debye approximation delta_eps and tau lengths differ")
     # gprMax requires all permittivity differences (delta_eps) to be strictly positive.
     # Filter out poles with zero (or near-zero) amplitude.
-    filtered = [(de, tq) for de, tq in zip(approx.delta_eps, approx.tau, strict=True) if de > 1e-30]
+    filtered = [
+        (de, tq)
+        for de, tq in zip(approx.delta_eps, approx.tau, strict=True)
+        if de > 1e-30
+    ]
     if not filtered:
         raise ValueError(
             f"Debye approximation for {approx.material_id} has no non-zero poles"
@@ -343,16 +379,22 @@ def render_debye_material_commands(approx: DebyeApproximation) -> list[str]:
     ]
 
 
-def material_from_mapping(material_id: str, data: Mapping[str, Any], *, use_default_catalog: bool = False) -> ColeColeMedium:
+def material_from_mapping(
+    material_id: str, data: Mapping[str, Any], *, use_default_catalog: bool = False
+) -> ColeColeMedium:
     merged: dict[str, Any] = {}
     catalog_key = data.get("from_catalog")
     if catalog_key is not None:
         key = str(catalog_key)
         if not use_default_catalog:
-            raise ValueError(f"media.materials.{material_id}.from_catalog requires media.use_default_catalog: true")
+            raise ValueError(
+                f"media.materials.{material_id}.from_catalog requires media.use_default_catalog: true"
+            )
         if key not in DEFAULT_COLE_COLE_CATALOG:
             available = ", ".join(sorted(DEFAULT_COLE_COLE_CATALOG))
-            raise ValueError(f"unknown media catalog key {key!r}; available keys: {available}")
+            raise ValueError(
+                f"unknown media catalog key {key!r}; available keys: {available}"
+            )
         merged.update(DEFAULT_COLE_COLE_CATALOG[key])
     merged.update({k: v for k, v in data.items() if k != "from_catalog"})
     model = str(merged.get("model", "cole_cole")).lower().replace("-", "_")
@@ -368,7 +410,13 @@ def material_from_mapping(material_id: str, data: Mapping[str, Any], *, use_defa
             sigma=merged.get("sigma", 0.0),
             source=None if merged.get("source") is None else str(merged.get("source")),
             role=None if merged.get("role") is None else str(merged.get("role")),
-            medium_type=None if merged.get("medium_type") is None else str(merged.get("medium_type")),
+            medium_type=(
+                None
+                if merged.get("medium_type") is None
+                else str(merged.get("medium_type"))
+            ),
         )
     except KeyError as exc:
-        raise ValueError(f"media.materials.{material_id}.{exc.args[0]} is required") from exc
+        raise ValueError(
+            f"media.materials.{material_id}.{exc.args[0]} is required"
+        ) from exc

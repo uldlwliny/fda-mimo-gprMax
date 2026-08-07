@@ -23,6 +23,24 @@ from .media import (
 
 class ValidationError(ValueError):
     """Raised when a scenario is invalid."""
+    _GPRMAX_BUILTIN_WAVEFORMS = {
+        "gaussian",
+        "gaussiandot",
+        "gaussiandotnorm",
+        "gaussiandotdot",
+        "gaussiandotdotnorm",
+        "gaussianprime",
+        "gaussiandoubleprime",
+        "ricker",
+        "sine",
+        "contsine",
+        "impulse",
+    }
+    
+    _WAVEFORM_ALIASES = {
+        "gaussian_dot": "gaussiandot",
+        "sinusoid": "sine",
+    }
 
 
 def _as_float3(value: Any, name: str) -> tuple[float, float, float]:
@@ -94,6 +112,48 @@ class GridConfig:
     def to_gprmax(self) -> str:
         return "#dx_dy_dz: {:.9g} {:.9g} {:.9g}".format(*self.spacing)
 
+_C0 = 299792458.0
+def estimate_gprmax_dt(
+    domain: DomainConfig,
+    grid: GridConfig,
+) -> float:
+    """Estimate the CFL timestep used by gprMax for this adapter grid."""
+
+    sx, sy, sz = domain.size
+    dx, dy, dz = grid.spacing
+
+    nx = int(np.rint(sx / dx))
+    ny = int(np.rint(sy / dy))
+    nz = int(np.rint(sz / dz))
+
+    if nx <= 0 or ny <= 0 or nz <= 0:
+        raise ValidationError(
+            "domain/grid combination produces an invalid cell count"
+        )
+
+    if nx == 1:
+        denominator = _C0 * np.sqrt(
+            1.0 / dy**2 + 1.0 / dz**2
+        )
+
+    elif ny == 1:
+        denominator = _C0 * np.sqrt(
+            1.0 / dx**2 + 1.0 / dz**2
+        )
+
+    elif nz == 1:
+        denominator = _C0 * np.sqrt(
+            1.0 / dx**2 + 1.0 / dy**2
+        )
+
+    else:
+        denominator = _C0 * np.sqrt(
+            1.0 / dx**2
+            + 1.0 / dy**2
+            + 1.0 / dz**2
+        )
+
+    return float(1.0 / denominator)
 
 @dataclass(frozen=True)
 class TimeConfig:
@@ -207,27 +267,92 @@ class WaveformConfig:
     time: tuple[float, ...] = field(default_factory=tuple)
 
     @classmethod
-    def from_mapping(cls, data: Mapping[str, Any] | None) -> "WaveformConfig":
+    def from_mapping(
+        cls,
+        data: Mapping[str, Any] | None,
+    ) -> "WaveformConfig":
         data = data or {}
-        mode = str(data.get("mode", data.get("type", "builtin"))).lower().replace("-", "_")
-        shape = str(data.get("shape", data.get("name", "ricker"))).lower()
+
+        mode = str(
+            data.get("mode", data.get("type", "builtin"))
+        ).lower().replace("-", "_")
+
+        shape = str(
+            data.get("shape", data.get("name", "ricker"))
+        ).lower()
+
+        shape = _WAVEFORM_ALIASES.get(shape, shape)
+
         amp = float(data.get("amplitude", 1.0))
         prefix = str(data.get("identifier_prefix", "fda_src"))
-        samples = tuple(float(v) for v in data.get("samples", []))
-        time = tuple(float(v) for v in data.get("time", []))
+
+        samples = tuple(
+            float(v) for v in data.get("samples", [])
+        )
+
+        time = tuple(
+            float(v) for v in data.get("time", [])
+        )
+
+        if not np.isfinite(amp):
+            raise ValidationError(
+                "waveform.amplitude must be finite"
+            )
+
         if mode in {"built_in", "builtin"}:
             mode = "builtin"
-            if not shape:
-                raise ValidationError("waveform.shape is required")
-        elif mode in {"excitation", "excitation_file", "custom"}:
+
+            if shape not in _GPRMAX_BUILTIN_WAVEFORMS:
+                raise ValidationError(
+                    "waveform.shape must be one of "
+                    f"{sorted(_GPRMAX_BUILTIN_WAVEFORMS)}"
+                )
+
+        elif mode in {
+            "excitation",
+            "excitation_file",
+            "custom",
+        }:
             mode = "excitation_file"
+
             if not samples:
-                raise ValidationError("waveform.samples are required for excitation_file mode")
+                raise ValidationError(
+                    "waveform.samples are required "
+                    "for excitation_file mode"
+                )
+
             if time and len(time) != len(samples):
-                raise ValidationError("waveform.time length must match waveform.samples")
+                raise ValidationError(
+                    "waveform.time length must match "
+                    "waveform.samples"
+                )
+
+            if time:
+                arr_t = np.asarray(time, dtype=float)
+
+                if not np.all(np.isfinite(arr_t)):
+                    raise ValidationError(
+                        "waveform.time must contain finite values"
+                    )
+
+                if np.any(np.diff(arr_t) <= 0):
+                    raise ValidationError(
+                        "waveform.time must be strictly increasing"
+                    )
+
         else:
-            raise ValidationError(f"unsupported waveform mode: {mode}")
-        return cls(mode=mode, shape=shape, amplitude=amp, identifier_prefix=prefix, samples=samples, time=time)
+            raise ValidationError(
+                f"unsupported waveform mode: {mode}"
+            )
+
+        return cls(
+            mode=mode,
+            shape=shape,
+            amplitude=amp,
+            identifier_prefix=prefix,
+            samples=samples,
+            time=time,
+        )
 
     def identifier(self, tx_index: int) -> str:
         return f"{self.identifier_prefix}_{tx_index:03d}"
@@ -479,6 +604,7 @@ class MediaConfig:
     debye_approximations: tuple[DebyeApproximation, ...] = ()
     fit_frequencies_hz: tuple[float, ...] = ()
     warnings: tuple[str, ...] = ()
+    fdtd_dt: float | None = None
 
     @property
     def has_structured_media(self) -> bool:
@@ -496,6 +622,7 @@ class MediaConfig:
         fda: FDAConfig,
         processing: ProcessingConfig,
         scene_materials: Sequence[str],
+        fdtd_dt: float,
     ) -> "MediaConfig":
         if data is None:
             return cls.empty()
@@ -522,12 +649,36 @@ class MediaConfig:
         if collisions:
             raise ValidationError(f"structured media id(s) collide with raw scene.materials #material definitions: {collisions}")
         if not materials:
-            return cls(materials=(), fit=fit, use_default_catalog=use_default_catalog)
+            return cls(materials=(), fit=fit, use_default_catalog=use_default_catalog, fdtd_dt=float(fdtd_dt))
         fit_freqs = _fit_frequencies(fit, fda, processing)
         approximations: list[DebyeApproximation] = []
         fit_warnings: list[str] = []
         for medium in materials:
-            approx = fit_cole_cole_to_debye(medium, fit_freqs, n_poles=fit.n_poles)
+            tau_floor = np.nextafter(float(fdtd_dt), np.inf)
+            approx = fit_cole_cole_to_debye(medium, fit_freqs, n_poles=fit.n_poles, tau_min=tau_floor)
+            active_taus = [
+                tq
+                for de, tq in zip(
+                    approx.delta_eps,
+                    approx.tau,
+                    strict=True,
+                )
+                if de > 1e-30
+            ]
+            
+            if not active_taus:
+                raise ValidationError(
+                    f"media.materials.{medium.material_id}: "
+                    "Debye approximation has no active poles"
+                )
+            
+            if min(active_taus) <= fdtd_dt:
+                raise ValidationError(
+                    f"media.materials.{medium.material_id}: "
+                    "Debye relaxation time must be greater than "
+                    f"the FDTD timestep; min_tau={min(active_taus):.6g}, "
+                    f"dt={fdtd_dt:.6g}"
+                )
             if approx.max_rel_error > fit.max_rel_error_warn:
                 fit_warnings.append(f"media.materials.{medium.material_id}: max_rel_error {approx.max_rel_error:.6g} exceeds warn threshold {fit.max_rel_error_warn:.6g}")
             if approx.max_rel_error > fit.max_rel_error_fail and not fit.allow_poor_fit:
@@ -542,6 +693,7 @@ class MediaConfig:
             debye_approximations=tuple(approximations),
             fit_frequencies_hz=tuple(float(v) for v in fit_freqs),
             warnings=tuple(fit_warnings),
+            fdtd_dt=float(fdtd_dt),
         )
 
     def metadata(self) -> dict[str, Any]:
@@ -556,6 +708,7 @@ class MediaConfig:
             "source_model": "cole_cole",
             "approximation_model": "multi_pole_debye",
             "use_default_catalog": self.use_default_catalog,
+            "fdtd_dt_estimate_s": self.fdtd_dt,
             "fit": self.fit.metadata(),
             "fit_frequency_range": [
                 self.fit.frequency_min if self.fit.frequency_min is not None else min(self.fit_frequencies_hz),
@@ -569,6 +722,18 @@ class MediaConfig:
             },
             "materials": [m.to_dict() for m in self.materials],
             "debye_approximations": [a.to_dict(include_frequencies=False) for a in self.debye_approximations],
+            "debye_stability": [
+                {
+                    "material_id": approx.material_id,
+                    "min_tau_s": min(approx.tau),
+                    "min_tau_over_dt": (
+                        min(approx.tau) / self.fdtd_dt
+                        if self.fdtd_dt
+                        else None
+                    ),
+                }
+                for approx in self.debye_approximations
+            ],
             "warnings": list(self.warnings),
         }
 
@@ -625,18 +790,74 @@ class ScenarioConfig:
         output = data.get("output", {}) or {}
         processing = ProcessingConfig.from_mapping(output)
         scene = SceneConfig.from_mapping(data.get("scene"))
-        media = MediaConfig.from_mapping(data.get("media"), fda=fda, processing=processing, scene_materials=scene.materials)
+        domain = DomainConfig.from_mapping(
+            data["domain"]
+        )
+        grid = GridConfig.from_mapping(
+            data["grid"]
+        )
+        time_config = TimeConfig.from_mapping(
+            data["time"]
+        )
+        fdtd_dt = estimate_gprmax_dt(
+            domain,
+            grid,
+        )
+        array = ArrayConfig.from_mapping(
+            data["array"]
+        )
+        fda = FDAConfig.from_mapping(
+            data["fda"],
+            array.nt,
+        )
+        waveform = WaveformConfig.from_mapping(
+            data.get("waveform")
+        )
+
+        if waveform.mode == "excitation_file":
+            fda_freqs = np.asarray(
+                fda.frequencies,
+                dtype=float,
+            )
+        
+            if not np.allclose(
+                fda_freqs,
+                fda_freqs[0],
+                rtol=0,
+                atol=0,
+            ):
+                raise ValidationError(
+                    "excitation_file mode currently defines one "
+                    "absolute waveform shared by all Tx and therefore "
+                    "cannot represent a non-degenerate FDA frequency "
+                    "schedule safely"
+                )
+
+        output = data.get("output", {}) or {}
+        processing = ProcessingConfig.from_mapping(
+            output
+        )
+        scene = SceneConfig.from_mapping(
+            data.get("scene")
+        )
+        media = MediaConfig.from_mapping(
+            data.get("media"),
+            fda=fda,
+            processing=processing,
+            scene_materials=scene.materials,
+            fdtd_dt=fdtd_dt,
+        )
         output_root = Path(output.get("root", data.get("output_root", "runs")))
         if source_path is not None and not output_root.is_absolute():
             output_root = (source_path.parent / output_root).resolve()
         return cls(
             name=str(data.get("name", "scene")),
-            domain=DomainConfig.from_mapping(data["domain"]),
-            grid=GridConfig.from_mapping(data["grid"]),
-            time=TimeConfig.from_mapping(data["time"]),
+            domain=domain,
+            grid=grid,
+            time=time_config,
             array=array,
             fda=fda,
-            waveform=WaveformConfig.from_mapping(data.get("waveform")),
+            waveform=waveform,
             receiver=ReceiverConfig.from_mapping(data.get("receiver")),
             scene=scene,
             variants=parse_variants(data.get("variants")),

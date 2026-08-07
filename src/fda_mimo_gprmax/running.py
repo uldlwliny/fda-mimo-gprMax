@@ -60,6 +60,7 @@ class RunResult:
     output_path: Path
     output_exists: bool
     output_checksum: str | None
+    geometry_only: bool = False
 
     @property
     def ok(self) -> bool:
@@ -76,11 +77,17 @@ class RunResult:
             "output_path": str(self.output_path),
             "output_exists": self.output_exists,
             "output_checksum": self.output_checksum,
+            "geometry_only": self.geometry_only,
             "ok": self.ok,
         }
 
 
-def build_command_plan(scenario: ScenarioConfig, plan: RenderPlan, item: RenderedInput, geometry_only: bool = False) -> CommandPlan:
+def build_command_plan(
+    scenario: ScenarioConfig,
+    plan: RenderPlan,
+    item: RenderedInput,
+    geometry_only: bool = False,
+) -> CommandPlan:
     command = [*scenario.execution.executable, str(item.input_path)]
     if geometry_only:
         command.append("--geometry-only")
@@ -101,7 +108,9 @@ def build_command_plan(scenario: ScenarioConfig, plan: RenderPlan, item: Rendere
     )
 
 
-def output_is_stale(item: RenderedInput, manifest: dict[str, Any] | None = None) -> bool:
+def output_is_stale(
+    item: RenderedInput, manifest: dict[str, Any] | None = None
+) -> bool:
     if not item.output_path.exists():
         return True
     if manifest is None:
@@ -127,7 +136,10 @@ def run_command(command_plan: CommandPlan, timeout: float | None = None) -> RunR
     env.update(command_plan.env)
     command_plan.stdout_path.parent.mkdir(parents=True, exist_ok=True)
     start = time.perf_counter()
-    with command_plan.stdout_path.open("w", encoding="utf-8") as stdout, command_plan.stderr_path.open("w", encoding="utf-8") as stderr:
+    with (
+        command_plan.stdout_path.open("w", encoding="utf-8") as stdout,
+        command_plan.stderr_path.open("w", encoding="utf-8") as stderr,
+    ):
         proc = subprocess.run(
             command_plan.command,
             cwd=command_plan.cwd,
@@ -140,12 +152,24 @@ def run_command(command_plan: CommandPlan, timeout: float | None = None) -> RunR
         )
     elapsed = time.perf_counter() - start
     # gprMax writes ``.out`` next to the input file; relocate it to the expected path.
-    gprmax_output = _gprmax_output_for_input(command_plan.input_path)
-    if gprmax_output.exists():
-        command_plan.expected_output_path.parent.mkdir(parents=True, exist_ok=True)
-        gprmax_output.replace(command_plan.expected_output_path)
-    exists = command_plan.expected_output_path.exists()
-    checksum = file_sha256(command_plan.expected_output_path) if exists else None
+    if command_plan.geometry_only:
+        exists = False
+        checksum = None
+
+    else:
+        gprmax_output = _gprmax_output_for_input(command_plan.input_path)
+
+        if gprmax_output.exists():
+            command_plan.expected_output_path.parent.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
+
+            gprmax_output.replace(command_plan.expected_output_path)
+
+        exists = command_plan.expected_output_path.exists()
+
+        checksum = file_sha256(command_plan.expected_output_path) if exists else None
     return RunResult(
         tx_index=command_plan.tx_index,
         command=command_plan.command,
@@ -156,10 +180,17 @@ def run_command(command_plan: CommandPlan, timeout: float | None = None) -> RunR
         output_path=command_plan.expected_output_path,
         output_exists=exists,
         output_checksum=checksum,
+        geometry_only=command_plan.geometry_only,
     )
 
 
-def write_manifest(plan: RenderPlan, scenario: ScenarioConfig, command_plans: list[CommandPlan], results: list[RunResult] | None = None, stage: str = "planned") -> Path:
+def write_manifest(
+    plan: RenderPlan,
+    scenario: ScenarioConfig,
+    command_plans: list[CommandPlan],
+    results: list[RunResult] | None = None,
+    stage: str = "planned",
+) -> Path:
     payload = {
         "stage": stage,
         "scenario": scenario.metadata(),
@@ -168,7 +199,9 @@ def write_manifest(plan: RenderPlan, scenario: ScenarioConfig, command_plans: li
         "commands": [cmd.to_dict() for cmd in command_plans],
         "results": [] if results is None else [res.to_dict() for res in results],
         "checksums": {
-            "manifest_basis": hashlib.sha256(stable_json(plan.to_manifest()).encode("utf-8")).hexdigest(),
+            "manifest_basis": hashlib.sha256(
+                stable_json(plan.to_manifest()).encode("utf-8")
+            ).hexdigest(),
         },
     }
     path = plan.logs_dir / "run_manifest.json"
@@ -176,8 +209,16 @@ def write_manifest(plan: RenderPlan, scenario: ScenarioConfig, command_plans: li
     return path
 
 
-def run_plan(scenario: ScenarioConfig, plan: RenderPlan, geometry_only: bool = False, timeout: float | None = None) -> list[RunResult]:
-    commands = [build_command_plan(scenario, plan, item, geometry_only=geometry_only) for item in plan.inputs]
+def run_plan(
+    scenario: ScenarioConfig,
+    plan: RenderPlan,
+    geometry_only: bool = False,
+    timeout: float | None = None,
+) -> list[RunResult]:
+    commands = [
+        build_command_plan(scenario, plan, item, geometry_only=geometry_only)
+        for item in plan.inputs
+    ]
     write_manifest(plan, scenario, commands, stage="planned")
     results: list[RunResult] = []
     for cmd in commands:
@@ -186,5 +227,15 @@ def run_plan(scenario: ScenarioConfig, plan: RenderPlan, geometry_only: bool = F
         write_manifest(plan, scenario, commands, results, stage="running")
         if not result.ok and scenario.execution.failure_policy == "stop":
             break
-    write_manifest(plan, scenario, commands, results, stage="complete" if all(r.ok for r in results) and len(results) == len(commands) else "failed")
+    write_manifest(
+        plan,
+        scenario,
+        commands,
+        results,
+        stage=(
+            "complete"
+            if all(r.ok for r in results) and len(results) == len(commands)
+            else "failed"
+        ),
+    )
     return results

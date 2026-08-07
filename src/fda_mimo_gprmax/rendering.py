@@ -36,7 +36,9 @@ class RenderedInput:
             "source_position": list(self.source_position),
             "receiver_positions": self.receiver_positions,
             "component": self.component,
-            "excitation_path": None if self.excitation_path is None else str(self.excitation_path),
+            "excitation_path": (
+                None if self.excitation_path is None else str(self.excitation_path)
+            ),
             "checksum": self.checksum,
         }
 
@@ -84,26 +86,55 @@ def _source_line(scenario: ScenarioConfig, tx_index: int, waveform_id: str) -> s
     return f"#hertzian_dipole: {scenario.array.polarization} {_fmt(pos)} {waveform_id}"
 
 
-def _write_excitation_file(scenario: ScenarioConfig, path: Path, waveform_id: str) -> None:
+def _write_excitation_file(
+    scenario: ScenarioConfig,
+    path: Path,
+    waveform_id: str,
+) -> None:
     wf = scenario.waveform
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as f:
+
+    path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    scaled_samples = [float(sample) * float(wf.amplitude) for sample in wf.samples]
+
+    with path.open(
+        "w",
+        encoding="utf-8",
+    ) as f:
         if wf.time:
             f.write(f"time {waveform_id}\n")
-            for t, sample in zip(wf.time, wf.samples, strict=True):
+
+            for t, sample in zip(
+                wf.time,
+                scaled_samples,
+                strict=True,
+            ):
                 f.write(f"{t:.17g} {sample:.17g}\n")
+
         else:
             f.write(f"{waveform_id}\n")
-            for sample in wf.samples:
+
+            for sample in scaled_samples:
                 f.write(f"{sample:.17g}\n")
 
 
-def _waveform_lines(scenario: ScenarioConfig, tx_index: int, config_dir: Path) -> tuple[list[str], Path | None, str]:
+def _waveform_lines(
+    scenario: ScenarioConfig, tx_index: int, config_dir: Path
+) -> tuple[list[str], Path | None, str]:
     wf = scenario.waveform
     waveform_id = wf.identifier(tx_index)
     center_frequency = scenario.fda.frequencies[tx_index]
     if wf.mode == "builtin":
-        return [f"#waveform: {wf.shape} {wf.amplitude:.9g} {center_frequency:.9g} {waveform_id}"], None, waveform_id
+        return (
+            [
+                f"#waveform: {wf.shape} {wf.amplitude:.9g} {center_frequency:.9g} {waveform_id}"
+            ],
+            None,
+            waveform_id,
+        )
     excitation_path = config_dir / f"excitation_tx_{tx_index:03d}.txt"
     _write_excitation_file(scenario, excitation_path, waveform_id)
     rel = excitation_path.name
@@ -117,8 +148,12 @@ def render_structured_media_commands(scenario: ScenarioConfig) -> list[str]:
     return commands
 
 
-def render_input_text(scenario: ScenarioConfig, variant: VariantConfig, tx_index: int, config_dir: Path) -> tuple[str, Path | None, str]:
-    waveform_lines, excitation_path, waveform_id = _waveform_lines(scenario, tx_index, config_dir)
+def render_input_text(
+    scenario: ScenarioConfig, variant: VariantConfig, tx_index: int, config_dir: Path
+) -> tuple[str, Path | None, str]:
+    waveform_lines, excitation_path, waveform_id = _waveform_lines(
+        scenario, tx_index, config_dir
+    )
     lines: list[str] = [
         f"#title: {scenario.scene.title} | {scenario.name} | {variant.name} | tx_{tx_index:03d}",
         scenario.domain.to_gprmax(),
@@ -144,17 +179,27 @@ def render_input_text(scenario: ScenarioConfig, variant: VariantConfig, tx_index
     if scenario.scene.geometry_view:
         sx, sy, sz = scenario.domain.size
         dx, dy, dz = scenario.grid.spacing
-        lines.extend([
-            "",
-            f"#geometry_view: 0 0 0 {sx:.9g} {sy:.9g} {sz:.9g} {dx:.9g} {dy:.9g} {dz:.9g} geometry_tx_{tx_index:03d} n",
-        ])
+        lines.extend(
+            [
+                "",
+                f"#geometry_view: 0 0 0 {sx:.9g} {sy:.9g} {sz:.9g} {dx:.9g} {dy:.9g} {dz:.9g} geometry_tx_{tx_index:03d} n",
+            ]
+        )
     lines.append("")
     return "\n".join(lines), excitation_path, waveform_id
 
 
-def render_scenario_inputs(scenario: ScenarioConfig, variant_name: str | None = None, run_dir: str | Path | None = None) -> RenderPlan:
+def render_scenario_inputs(
+    scenario: ScenarioConfig,
+    variant_name: str | None = None,
+    run_dir: str | Path | None = None,
+) -> RenderPlan:
     variant = scenario.variant(variant_name or scenario.variants[0].name)
-    base = Path(run_dir) if run_dir is not None else scenario.output_root / scenario.name / variant.name
+    base = (
+        Path(run_dir)
+        if run_dir is not None
+        else scenario.output_root / scenario.name / variant.name
+    )
     base = base.resolve()
     config_dir = base / "config"
     raw_dir = base / "raw"
@@ -166,7 +211,9 @@ def render_scenario_inputs(scenario: ScenarioConfig, variant_name: str | None = 
 
     rendered: list[RenderedInput] = []
     for tx_index in range(scenario.nt):
-        text, excitation_path, waveform_id = render_input_text(scenario, variant, tx_index, config_dir)
+        text, excitation_path, waveform_id = render_input_text(
+            scenario, variant, tx_index, config_dir
+        )
         input_path = config_dir / f"generated_tx_{tx_index:03d}.in"
         input_path.write_text(text, encoding="utf-8")
         digest = checksum_text(text)
@@ -179,7 +226,9 @@ def render_scenario_inputs(scenario: ScenarioConfig, variant_name: str | None = 
                 output_path=output_path,
                 waveform_id=waveform_id,
                 center_frequency=scenario.fda.frequencies[tx_index],
-                source_position=tuple(float(v) for v in scenario.array.tx_positions[tx_index].tolist()),
+                source_position=tuple(
+                    float(v) for v in scenario.array.tx_positions[tx_index].tolist()
+                ),
                 receiver_positions=scenario.array.rx_positions.tolist(),
                 component=scenario.receiver.component,
                 excitation_path=excitation_path,
@@ -198,7 +247,15 @@ def render_scenario_inputs(scenario: ScenarioConfig, variant_name: str | None = 
         figures_dir=figures_dir,
         inputs=tuple(rendered),
         config_checksum=scenario.checksum(),
-        geometry_only_command_hint=[*scenario.execution.executable, str(rendered[0].input_path), "--geometry-only"] if rendered else [],
+        geometry_only_command_hint=(
+            [
+                *scenario.execution.executable,
+                str(rendered[0].input_path),
+                "--geometry-only",
+            ]
+            if rendered
+            else []
+        ),
     )
     write_render_manifest(plan, scenario)
     return plan
