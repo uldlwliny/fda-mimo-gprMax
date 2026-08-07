@@ -23,28 +23,34 @@ from .media import (
 
 class ValidationError(ValueError):
     """Raised when a scenario is invalid."""
-    _GPRMAX_BUILTIN_WAVEFORMS = {
-        "gaussian",
-        "gaussiandot",
-        "gaussiandotnorm",
-        "gaussiandotdot",
-        "gaussiandotdotnorm",
-        "gaussianprime",
-        "gaussiandoubleprime",
-        "ricker",
-        "sine",
-        "contsine",
-        "impulse",
-    }
-    
-    _WAVEFORM_ALIASES = {
-        "gaussian_dot": "gaussiandot",
-        "sinusoid": "sine",
-    }
+
+
+_GPRMAX_BUILTIN_WAVEFORMS = {
+    "gaussian",
+    "gaussiandot",
+    "gaussiandotnorm",
+    "gaussiandotdot",
+    "gaussiandotdotnorm",
+    "gaussianprime",
+    "gaussiandoubleprime",
+    "ricker",
+    "sine",
+    "contsine",
+    "impulse",
+}
+
+_WAVEFORM_ALIASES = {
+    "gaussian_dot": "gaussiandot",
+    "sinusoid": "sine",
+}
 
 
 def _as_float3(value: Any, name: str) -> tuple[float, float, float]:
-    if not isinstance(value, Sequence) or isinstance(value, (str, bytes)) or len(value) != 3:
+    if (
+        not isinstance(value, Sequence)
+        or isinstance(value, (str, bytes))
+        or len(value) != 3
+    ):
         raise ValidationError(f"{name} must be a 3-element sequence")
     out = tuple(float(v) for v in value)
     if not all(np.isfinite(out)):
@@ -112,7 +118,10 @@ class GridConfig:
     def to_gprmax(self) -> str:
         return "#dx_dy_dz: {:.9g} {:.9g} {:.9g}".format(*self.spacing)
 
+
 _C0 = 299792458.0
+
+
 def estimate_gprmax_dt(
     domain: DomainConfig,
     grid: GridConfig,
@@ -127,33 +136,22 @@ def estimate_gprmax_dt(
     nz = int(np.rint(sz / dz))
 
     if nx <= 0 or ny <= 0 or nz <= 0:
-        raise ValidationError(
-            "domain/grid combination produces an invalid cell count"
-        )
+        raise ValidationError("domain/grid combination produces an invalid cell count")
 
     if nx == 1:
-        denominator = _C0 * np.sqrt(
-            1.0 / dy**2 + 1.0 / dz**2
-        )
+        denominator = _C0 * np.sqrt(1.0 / dy**2 + 1.0 / dz**2)
 
     elif ny == 1:
-        denominator = _C0 * np.sqrt(
-            1.0 / dx**2 + 1.0 / dz**2
-        )
+        denominator = _C0 * np.sqrt(1.0 / dx**2 + 1.0 / dz**2)
 
     elif nz == 1:
-        denominator = _C0 * np.sqrt(
-            1.0 / dx**2 + 1.0 / dy**2
-        )
+        denominator = _C0 * np.sqrt(1.0 / dx**2 + 1.0 / dy**2)
 
     else:
-        denominator = _C0 * np.sqrt(
-            1.0 / dx**2
-            + 1.0 / dy**2
-            + 1.0 / dz**2
-        )
+        denominator = _C0 * np.sqrt(1.0 / dx**2 + 1.0 / dy**2 + 1.0 / dz**2)
 
     return float(1.0 / denominator)
+
 
 @dataclass(frozen=True)
 class TimeConfig:
@@ -196,13 +194,21 @@ class ArrayConfig:
             mode = "offset"
         else:
             if "rx_positions" not in data:
-                raise ValidationError("array.rx_positions is required for explicit mode")
+                raise ValidationError(
+                    "array.rx_positions is required for explicit mode"
+                )
             rx = _as_positions(data["rx_positions"], "array.rx_positions")
             mode = "explicit"
         pol = str(data.get("polarization", "z")).lower()
         if pol not in {"x", "y", "z"}:
             raise ValidationError("array.polarization must be x, y, or z")
-        return cls(tx_positions=tx, rx_positions=rx, mode=mode, rx_offset=offset, polarization=pol)
+        return cls(
+            tx_positions=tx,
+            rx_positions=rx,
+            mode=mode,
+            rx_offset=offset,
+            polarization=pol,
+        )
 
     @property
     def nt(self) -> int:
@@ -250,11 +256,18 @@ class FDAConfig:
         if len(freqs) != nt:
             raise ValidationError("FDA frequency count must equal Nt")
         if any((not np.isfinite(f)) or f <= 0 for f in freqs):
-            raise ValidationError("FDA center frequencies must be positive finite numbers")
+            raise ValidationError(
+                "FDA center frequencies must be positive finite numbers"
+            )
         return cls(kind=kind, f0=f0, df=df, frequencies=freqs)
 
     def metadata(self) -> dict[str, Any]:
-        return {"type": self.kind, "f0": self.f0, "df": self.df, "frequencies": list(self.frequencies)}
+        return {
+            "type": self.kind,
+            "f0": self.f0,
+            "df": self.df,
+            "frequencies": list(self.frequencies),
+        }
 
 
 @dataclass(frozen=True)
@@ -273,31 +286,23 @@ class WaveformConfig:
     ) -> "WaveformConfig":
         data = data or {}
 
-        mode = str(
-            data.get("mode", data.get("type", "builtin"))
-        ).lower().replace("-", "_")
+        mode = (
+            str(data.get("mode", data.get("type", "builtin"))).lower().replace("-", "_")
+        )
 
-        shape = str(
-            data.get("shape", data.get("name", "ricker"))
-        ).lower()
+        shape = str(data.get("shape", data.get("name", "ricker"))).lower()
 
         shape = _WAVEFORM_ALIASES.get(shape, shape)
 
         amp = float(data.get("amplitude", 1.0))
         prefix = str(data.get("identifier_prefix", "fda_src"))
 
-        samples = tuple(
-            float(v) for v in data.get("samples", [])
-        )
+        samples = tuple(float(v) for v in data.get("samples", []))
 
-        time = tuple(
-            float(v) for v in data.get("time", [])
-        )
+        time = tuple(float(v) for v in data.get("time", []))
 
         if not np.isfinite(amp):
-            raise ValidationError(
-                "waveform.amplitude must be finite"
-            )
+            raise ValidationError("waveform.amplitude must be finite")
 
         if mode in {"built_in", "builtin"}:
             mode = "builtin"
@@ -317,33 +322,25 @@ class WaveformConfig:
 
             if not samples:
                 raise ValidationError(
-                    "waveform.samples are required "
-                    "for excitation_file mode"
+                    "waveform.samples are required " "for excitation_file mode"
                 )
 
             if time and len(time) != len(samples):
                 raise ValidationError(
-                    "waveform.time length must match "
-                    "waveform.samples"
+                    "waveform.time length must match " "waveform.samples"
                 )
 
             if time:
                 arr_t = np.asarray(time, dtype=float)
 
                 if not np.all(np.isfinite(arr_t)):
-                    raise ValidationError(
-                        "waveform.time must contain finite values"
-                    )
+                    raise ValidationError("waveform.time must contain finite values")
 
                 if np.any(np.diff(arr_t) <= 0):
-                    raise ValidationError(
-                        "waveform.time must be strictly increasing"
-                    )
+                    raise ValidationError("waveform.time must be strictly increasing")
 
         else:
-            raise ValidationError(
-                f"unsupported waveform mode: {mode}"
-            )
+            raise ValidationError(f"unsupported waveform mode: {mode}")
 
         return cls(
             mode=mode,
@@ -377,7 +374,9 @@ class ReceiverConfig:
         comp = str((data or {}).get("component", "Ez"))
         allowed = {"Ex", "Ey", "Ez", "Hx", "Hy", "Hz", "Ix", "Iy", "Iz"}
         if comp not in allowed:
-            raise ValidationError(f"receiver.component must be one of {sorted(allowed)}")
+            raise ValidationError(
+                f"receiver.component must be one of {sorted(allowed)}"
+            )
         return cls(component=comp)
 
 
@@ -414,7 +413,9 @@ class VariantConfig:
         if not isinstance(data, Mapping):
             raise ValidationError(f"variant {name} must be a mapping or geometry list")
         geom = data.get("geometry", data.get("include_geometry", []))
-        meta = {k: v for k, v in data.items() if k not in {"geometry", "include_geometry"}}
+        meta = {
+            k: v for k, v in data.items() if k not in {"geometry", "include_geometry"}
+        }
         return cls(name=name, geometry=tuple(_raw_commands(geom)), metadata=meta)
 
 
@@ -427,7 +428,9 @@ def parse_variants(data: Any) -> tuple[VariantConfig, ...]:
         out = []
         for item in data:
             if not isinstance(item, Mapping) or "name" not in item:
-                raise ValidationError("variant list entries must be mappings with a name")
+                raise ValidationError(
+                    "variant list entries must be mappings with a name"
+                )
             out.append(VariantConfig.from_obj(str(item["name"]), item))
         variants = tuple(out)
     else:
@@ -464,7 +467,14 @@ class ExecutionConfig:
         policy = str(data.get("failure_policy", "stop")).lower()
         if policy not in {"stop", "continue"}:
             raise ValidationError("execution.failure_policy must be stop or continue")
-        return cls(executable=executable, extra_args=extra, gpu=gpu, mpi=None if mpi is None else int(mpi), omp_threads=None if omp is None else int(omp), failure_policy=policy)
+        return cls(
+            executable=executable,
+            extra_args=extra,
+            gpu=gpu,
+            mpi=None if mpi is None else int(mpi),
+            omp_threads=None if omp is None else int(omp),
+            failure_policy=policy,
+        )
 
     def command_suffix(self) -> list[str]:
         args: list[str] = []
@@ -501,7 +511,9 @@ class ProcessingConfig:
         fr = data.get("frequency_range")
         freq_range = None if fr is None else (float(fr[0]), float(fr[1]))
         if freq_range and (freq_range[0] < 0 or freq_range[1] <= freq_range[0]):
-            raise ValidationError("output.frequency_range must be [f_min, f_max] with f_max > f_min >= 0")
+            raise ValidationError(
+                "output.frequency_range must be [f_min, f_max] with f_max > f_min >= 0"
+            )
         threshold = float(data.get("valid_band_threshold", 1e-3))
         if threshold < 0:
             raise ValidationError("output.valid_band_threshold must be non-negative")
@@ -520,7 +532,9 @@ class ProcessingConfig:
             "diagnostics": self.diagnostics,
             "valid_band_threshold": self.valid_band_threshold,
             "eta": self.eta,
-            "frequency_range": None if self.frequency_range is None else list(self.frequency_range),
+            "frequency_range": (
+                None if self.frequency_range is None else list(self.frequency_range)
+            ),
             "window": self.window,
         }
 
@@ -568,7 +582,12 @@ class MediaFitConfig:
             raise ValidationError("media.fit.n_poles must be positive")
         if out.num_frequencies < 2:
             raise ValidationError("media.fit.num_frequencies must be at least 2")
-        for name in ["frequency_min", "frequency_max", "max_rel_error_warn", "max_rel_error_fail"]:
+        for name in [
+            "frequency_min",
+            "frequency_max",
+            "max_rel_error_warn",
+            "max_rel_error_fail",
+        ]:
             value = getattr(out, name)
             if value is not None and (not np.isfinite(value)):
                 raise ValidationError(f"media.fit.{name} must be finite")
@@ -576,12 +595,20 @@ class MediaFitConfig:
             raise ValidationError("media.fit.frequency_min must be positive")
         if out.frequency_max is not None and out.frequency_max <= 0:
             raise ValidationError("media.fit.frequency_max must be positive")
-        if out.frequency_min is not None and out.frequency_max is not None and out.frequency_max <= out.frequency_min:
-            raise ValidationError("media.fit.frequency_max must be greater than frequency_min")
+        if (
+            out.frequency_min is not None
+            and out.frequency_max is not None
+            and out.frequency_max <= out.frequency_min
+        ):
+            raise ValidationError(
+                "media.fit.frequency_max must be greater than frequency_min"
+            )
         if out.max_rel_error_warn < 0 or out.max_rel_error_fail < 0:
             raise ValidationError("media.fit error thresholds must be non-negative")
         if out.max_rel_error_fail < out.max_rel_error_warn:
-            raise ValidationError("media.fit.max_rel_error_fail must be >= max_rel_error_warn")
+            raise ValidationError(
+                "media.fit.max_rel_error_fail must be >= max_rel_error_warn"
+            )
         return out
 
     def metadata(self) -> dict[str, Any]:
@@ -636,9 +663,15 @@ class MediaConfig:
         materials: list[ColeColeMedium] = []
         for material_id, entry in mats_obj.items():
             if not isinstance(entry, Mapping):
-                raise ValidationError(f"media.materials.{material_id} must be a mapping")
+                raise ValidationError(
+                    f"media.materials.{material_id} must be a mapping"
+                )
             try:
-                materials.append(material_from_mapping(str(material_id), entry, use_default_catalog=use_default_catalog))
+                materials.append(
+                    material_from_mapping(
+                        str(material_id), entry, use_default_catalog=use_default_catalog
+                    )
+                )
             except ValueError as exc:
                 raise ValidationError(str(exc)) from exc
         names = [m.material_id for m in materials]
@@ -647,15 +680,24 @@ class MediaConfig:
         raw_ids = _raw_material_ids(scene_materials)
         collisions = sorted(raw_ids.intersection(names))
         if collisions:
-            raise ValidationError(f"structured media id(s) collide with raw scene.materials #material definitions: {collisions}")
+            raise ValidationError(
+                f"structured media id(s) collide with raw scene.materials #material definitions: {collisions}"
+            )
         if not materials:
-            return cls(materials=(), fit=fit, use_default_catalog=use_default_catalog, fdtd_dt=float(fdtd_dt))
+            return cls(
+                materials=(),
+                fit=fit,
+                use_default_catalog=use_default_catalog,
+                fdtd_dt=float(fdtd_dt),
+            )
         fit_freqs = _fit_frequencies(fit, fda, processing)
         approximations: list[DebyeApproximation] = []
         fit_warnings: list[str] = []
         for medium in materials:
             tau_floor = np.nextafter(float(fdtd_dt), np.inf)
-            approx = fit_cole_cole_to_debye(medium, fit_freqs, n_poles=fit.n_poles, tau_min=tau_floor)
+            approx = fit_cole_cole_to_debye(
+                medium, fit_freqs, n_poles=fit.n_poles, tau_min=tau_floor
+            )
             active_taus = [
                 tq
                 for de, tq in zip(
@@ -665,13 +707,13 @@ class MediaConfig:
                 )
                 if de > 1e-30
             ]
-            
+
             if not active_taus:
                 raise ValidationError(
                     f"media.materials.{medium.material_id}: "
                     "Debye approximation has no active poles"
                 )
-            
+
             if min(active_taus) <= fdtd_dt:
                 raise ValidationError(
                     f"media.materials.{medium.material_id}: "
@@ -680,7 +722,9 @@ class MediaConfig:
                     f"dt={fdtd_dt:.6g}"
                 )
             if approx.max_rel_error > fit.max_rel_error_warn:
-                fit_warnings.append(f"media.materials.{medium.material_id}: max_rel_error {approx.max_rel_error:.6g} exceeds warn threshold {fit.max_rel_error_warn:.6g}")
+                fit_warnings.append(
+                    f"media.materials.{medium.material_id}: max_rel_error {approx.max_rel_error:.6g} exceeds warn threshold {fit.max_rel_error_warn:.6g}"
+                )
             if approx.max_rel_error > fit.max_rel_error_fail and not fit.allow_poor_fit:
                 raise ValidationError(
                     f"media.materials.{medium.material_id}: Debye approximation max_rel_error {approx.max_rel_error:.6g} exceeds fail threshold {fit.max_rel_error_fail:.6g}; set media.fit.allow_poor_fit: true to allow"
@@ -710,10 +754,22 @@ class MediaConfig:
             "use_default_catalog": self.use_default_catalog,
             "fdtd_dt_estimate_s": self.fdtd_dt,
             "fit": self.fit.metadata(),
-            "fit_frequency_range": [
-                self.fit.frequency_min if self.fit.frequency_min is not None else min(self.fit_frequencies_hz),
-                self.fit.frequency_max if self.fit.frequency_max is not None else max(self.fit_frequencies_hz),
-            ] if self.fit_frequencies_hz else None,
+            "fit_frequency_range": (
+                [
+                    (
+                        self.fit.frequency_min
+                        if self.fit.frequency_min is not None
+                        else min(self.fit_frequencies_hz)
+                    ),
+                    (
+                        self.fit.frequency_max
+                        if self.fit.frequency_max is not None
+                        else max(self.fit_frequencies_hz)
+                    ),
+                ]
+                if self.fit_frequencies_hz
+                else None
+            ),
             "fit_num_frequencies": len(self.fit_frequencies_hz),
             "fit_error_policy": {
                 "warn": self.fit.max_rel_error_warn,
@@ -721,15 +777,15 @@ class MediaConfig:
                 "allow_poor_fit": self.fit.allow_poor_fit,
             },
             "materials": [m.to_dict() for m in self.materials],
-            "debye_approximations": [a.to_dict(include_frequencies=False) for a in self.debye_approximations],
+            "debye_approximations": [
+                a.to_dict(include_frequencies=False) for a in self.debye_approximations
+            ],
             "debye_stability": [
                 {
                     "material_id": approx.material_id,
                     "min_tau_s": min(approx.tau),
                     "min_tau_over_dt": (
-                        min(approx.tau) / self.fdtd_dt
-                        if self.fdtd_dt
-                        else None
+                        min(approx.tau) / self.fdtd_dt if self.fdtd_dt else None
                     ),
                 }
                 for approx in self.debye_approximations
@@ -738,11 +794,15 @@ class MediaConfig:
         }
 
 
-def _fit_frequencies(fit: MediaFitConfig, fda: FDAConfig, processing: ProcessingConfig) -> np.ndarray:
+def _fit_frequencies(
+    fit: MediaFitConfig, fda: FDAConfig, processing: ProcessingConfig
+) -> np.ndarray:
     fda_freqs = np.asarray(fda.frequencies, dtype=float)
     positive_fda = fda_freqs[fda_freqs > 0]
     if positive_fda.size == 0:
-        raise ValidationError("FDA frequencies must contain positive values for media fitting")
+        raise ValidationError(
+            "FDA frequencies must contain positive values for media fitting"
+        )
     if fit.frequency_min is not None:
         lo = fit.frequency_min
     elif processing.frequency_range is not None and processing.frequency_range[0] > 0:
@@ -752,7 +812,9 @@ def _fit_frequencies(fit: MediaFitConfig, fda: FDAConfig, processing: Processing
     if fit.frequency_max is not None:
         hi = fit.frequency_max
     elif processing.frequency_range is not None:
-        hi = max(float(processing.frequency_range[1]), float(np.max(positive_fda)) * 1.5)
+        hi = max(
+            float(processing.frequency_range[1]), float(np.max(positive_fda)) * 1.5
+        )
     else:
         hi = float(np.max(positive_fda)) * 1.5
     if hi <= lo:
@@ -781,7 +843,9 @@ class ScenarioConfig:
     raw_data: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
-    def from_mapping(cls, data: Mapping[str, Any], source_path: Path | None = None) -> "ScenarioConfig":
+    def from_mapping(
+        cls, data: Mapping[str, Any], source_path: Path | None = None
+    ) -> "ScenarioConfig":
         for key in ["domain", "grid", "time", "array", "fda"]:
             if key not in data:
                 raise ValidationError(f"{key} section is required")
@@ -790,36 +854,26 @@ class ScenarioConfig:
         output = data.get("output", {}) or {}
         processing = ProcessingConfig.from_mapping(output)
         scene = SceneConfig.from_mapping(data.get("scene"))
-        domain = DomainConfig.from_mapping(
-            data["domain"]
-        )
-        grid = GridConfig.from_mapping(
-            data["grid"]
-        )
-        time_config = TimeConfig.from_mapping(
-            data["time"]
-        )
+        domain = DomainConfig.from_mapping(data["domain"])
+        grid = GridConfig.from_mapping(data["grid"])
+        time_config = TimeConfig.from_mapping(data["time"])
         fdtd_dt = estimate_gprmax_dt(
             domain,
             grid,
         )
-        array = ArrayConfig.from_mapping(
-            data["array"]
-        )
+        array = ArrayConfig.from_mapping(data["array"])
         fda = FDAConfig.from_mapping(
             data["fda"],
             array.nt,
         )
-        waveform = WaveformConfig.from_mapping(
-            data.get("waveform")
-        )
+        waveform = WaveformConfig.from_mapping(data.get("waveform"))
 
         if waveform.mode == "excitation_file":
             fda_freqs = np.asarray(
                 fda.frequencies,
                 dtype=float,
             )
-        
+
             if not np.allclose(
                 fda_freqs,
                 fda_freqs[0],
@@ -834,12 +888,6 @@ class ScenarioConfig:
                 )
 
         output = data.get("output", {}) or {}
-        processing = ProcessingConfig.from_mapping(
-            output
-        )
-        scene = SceneConfig.from_mapping(
-            data.get("scene")
-        )
         media = MediaConfig.from_mapping(
             data.get("media"),
             fda=fda,
@@ -889,9 +937,17 @@ class ScenarioConfig:
             "fda": self.fda.metadata(),
             "waveform": self.waveform.metadata(),
             "receiver": {"component": self.receiver.component},
-            "scene": {"title": self.scene.title, "materials": list(self.scene.materials), "geometry": list(self.scene.geometry), "geometry_view": self.scene.geometry_view},
+            "scene": {
+                "title": self.scene.title,
+                "materials": list(self.scene.materials),
+                "geometry": list(self.scene.geometry),
+                "geometry_view": self.scene.geometry_view,
+            },
             "media": self.media.metadata(),
-            "variants": [{"name": v.name, "geometry": list(v.geometry), "metadata": v.metadata} for v in self.variants],
+            "variants": [
+                {"name": v.name, "geometry": list(v.geometry), "metadata": v.metadata}
+                for v in self.variants
+            ],
             "execution": self.execution.metadata(),
             "output": {"root": str(self.output_root), **self.processing.metadata()},
         }

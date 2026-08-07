@@ -64,6 +64,8 @@ class RunResult:
 
     @property
     def ok(self) -> bool:
+        if self.geometry_only:
+            return self.returncode == 0
         return self.returncode == 0 and self.output_exists
 
     def to_dict(self) -> dict[str, Any]:

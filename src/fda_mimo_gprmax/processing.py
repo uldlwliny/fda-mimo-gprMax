@@ -177,6 +177,8 @@ def compute_source_spectra(
                 time,
                 float(dt),
             )
+            waveform = np.asarray(waveform, dtype=np.float64)
+            waveform[time > scenario.time.window] = 0.0
 
         except SourceWaveformError as exc:
             raise ProcessingError(str(exc)) from exc
@@ -392,12 +394,16 @@ def _run_evidence_metadata(
         if not fft_bin_spacing or fda_delta == 0
         else float(fft_bin_spacing / fda_delta)
     )
+    abs_diffs = np.abs(np.diff(fda_freqs))
+    fda_spacing_min = float(np.min(abs_diffs))
+    fda_spacing_median = float(np.median(abs_diffs))
+    fda_spacing_max = float(np.max(abs_diffs))
+
     can_resolve = bool(
         fft_bin_spacing is not None
-        and fda_delta > 0
-        and fft_bin_spacing <= fda_delta / 2.0
+        and fda_spacing_min > 0
+        and fft_bin_spacing <= fda_spacing_min / 2.0
     )
-
     return {
         "variant_dir": str(variant_dir),
         "manifest_available": manifest is not None,
@@ -409,7 +415,9 @@ def _run_evidence_metadata(
         "numerical_dispersion": dispersion.to_dict(),
         "gprmax_version": gprmax_version,
         "fft_bin_spacing_hz": fft_bin_spacing,
-        "fda_delta_f_hz": fda_delta,
+        "fda_spacing_min_hz": fda_spacing_min,
+        "fda_spacing_max_hz": fda_spacing_max,
+        "fda_spacing_median_hz": fda_spacing_median,
         "fft_resolution_ratio": ratio,
         "can_resolve_fda_step_by_fft": can_resolve,
         "valid_fraction": float(valid_mask.mean()) if valid_mask.size else None,

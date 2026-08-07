@@ -64,10 +64,7 @@ def sample_excitation_file_waveform(
     validated independently.
     """
 
-    samples = (
-        np.asarray(waveform.samples, dtype=np.float64)
-        * float(waveform.amplitude)
-    )
+    samples = np.asarray(waveform.samples, dtype=np.float64) * float(waveform.amplitude)
 
     if waveform.time:
         src_t = np.asarray(waveform.time, dtype=np.float64)
@@ -110,6 +107,4 @@ def sample_waveform(
             time,
         )
 
-    raise SourceWaveformError(
-        f"unsupported waveform mode: {waveform.mode}"
-    )
+    raise SourceWaveformError(f"unsupported waveform mode: {waveform.mode}")
