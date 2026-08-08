@@ -491,7 +491,9 @@ def make_snapshot(
             "axis_convention": "/axis/tx_positions and /axis/rx_positions use actual positions when available; requested positions are stored separately.",
             "processing_metrics": {
                 "fft_bin_spacing_hz": evidence["fft_bin_spacing_hz"],
-                "fda_delta_f_hz": evidence["fda_delta_f_hz"],
+                "fda_spacing_min_hz": evidence["fda_spacing_min_hz"],
+                "fda_spacing_median_hz": evidence["fda_spacing_median_hz"],
+                "fda_spacing_max_hz": evidence["fda_spacing_max_hz"],
                 "fft_resolution_ratio": evidence["fft_resolution_ratio"],
                 "can_resolve_fda_step_by_fft": evidence["can_resolve_fda_step_by_fft"],
                 "valid_fraction": evidence["valid_fraction"],
