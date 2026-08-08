@@ -5,7 +5,10 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import statistics
 import subprocess
+import sys
+import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -13,6 +16,22 @@ from typing import Any
 
 from .config import ScenarioConfig, stable_json
 from .rendering import RenderPlan, RenderedInput
+
+
+def _format_duration(seconds: float) -> str:
+    seconds = max(0.0, float(seconds))
+    if seconds < 60:
+        return f"{seconds:.1f}s"
+    minutes, sec = divmod(int(round(seconds)), 60)
+    if minutes < 60:
+        return f"{minutes}m {sec:02d}s"
+    hours, minute = divmod(minutes, 60)
+    return f"{hours}h {minute:02d}m"
+
+
+def _emit_progress(message: str) -> None:
+    """Emit human-readable progress without contaminating stdout JSON."""
+    print(f"[fda-mimo-gprmax] {message}", file=sys.stderr, flush=True)
 
 
 def file_sha256(path: str | Path) -> str:
@@ -96,7 +115,6 @@ def build_command_plan(
         command.extend(scenario.execution.extra_args)
     else:
         command.extend(scenario.execution.command_suffix())
-    command.extend(scenario.execution.command_suffix())
     env: dict[str, str] = {}
     if scenario.execution.omp_threads is not None:
         env["OMP_NUM_THREADS"] = str(scenario.execution.omp_threads)
@@ -219,6 +237,8 @@ def run_plan(
     plan: RenderPlan,
     geometry_only: bool = False,
     timeout: float | None = None,
+    progress: bool = True,
+    heartbeat_seconds: float = 30.0,
 ) -> list[RunResult]:
     commands = [
         build_command_plan(scenario, plan, item, geometry_only=geometry_only)
@@ -226,12 +246,92 @@ def run_plan(
     ]
     write_manifest(plan, scenario, commands, stage="planned")
     results: list[RunResult] = []
-    for cmd in commands:
-        result = run_command(cmd, timeout=timeout)
+    durations: list[float] = []
+    total = len(commands)
+    run_start = time.perf_counter()
+
+    if progress:
+        mode = "geometry-only" if geometry_only else "FDTD"
+        _emit_progress(
+            f"{plan.scenario_name}/{plan.variant}: {mode} start | {total} Tx"
+        )
+
+    for ordinal, cmd in enumerate(commands, start=1):
+        tx_start = time.perf_counter()
+
+        if progress:
+            eta = (
+                statistics.median(durations) * (total - len(results))
+                if durations
+                else None
+            )
+            eta_text = "unknown" if eta is None else _format_duration(eta)
+            _emit_progress(
+                f"{plan.scenario_name}/{plan.variant}: "
+                f"Tx {ordinal}/{total} (tx_{cmd.tx_index:03d}) START | "
+                f"elapsed {_format_duration(tx_start - run_start)} | "
+                f"sim ETA {eta_text}"
+            )
+
+        heartbeat_stop = threading.Event()
+        heartbeat_thread: threading.Thread | None = None
+
+        if progress and heartbeat_seconds > 0:
+            def heartbeat(
+                *,
+                _ordinal: int = ordinal,
+                _cmd: CommandPlan = cmd,
+                _tx_start: float = tx_start,
+            ) -> None:
+                while not heartbeat_stop.wait(heartbeat_seconds):
+                    tx_elapsed = time.perf_counter() - _tx_start
+                    if durations:
+                        median_tx = statistics.median(durations)
+                        remaining = max(
+                            0.0,
+                            median_tx * (total - len(results)) - tx_elapsed,
+                        )
+                        eta_text = _format_duration(remaining)
+                    else:
+                        eta_text = "unknown"
+                    _emit_progress(
+                        f"{plan.scenario_name}/{plan.variant}: "
+                        f"Tx {_ordinal}/{total} (tx_{_cmd.tx_index:03d}) RUNNING | "
+                        f"tx elapsed {_format_duration(tx_elapsed)} | "
+                        f"sim ETA {eta_text}"
+                    )
+
+            heartbeat_thread = threading.Thread(target=heartbeat, daemon=True)
+            heartbeat_thread.start()
+
+        try:
+            result = run_command(cmd, timeout=timeout)
+        finally:
+            heartbeat_stop.set()
+            if heartbeat_thread is not None:
+                heartbeat_thread.join()
+
         results.append(result)
+        durations.append(result.elapsed_seconds)
         write_manifest(plan, scenario, commands, results, stage="running")
+
+        if progress:
+            completed = len(results)
+            remaining = total - completed
+            eta = statistics.median(durations) * remaining
+            status = "DONE" if result.ok else f"FAILED(rc={result.returncode})"
+            _emit_progress(
+                f"{plan.scenario_name}/{plan.variant}: "
+                f"Tx {ordinal}/{total} (tx_{cmd.tx_index:03d}) {status} | "
+                f"{100.0 * completed / total:.1f}% | "
+                f"tx {_format_duration(result.elapsed_seconds)} | "
+                f"elapsed {_format_duration(time.perf_counter() - run_start)} | "
+                f"sim ETA {_format_duration(eta)}"
+            )
+
         if not result.ok and scenario.execution.failure_policy == "stop":
             break
+
     write_manifest(
         plan,
         scenario,
@@ -243,4 +343,13 @@ def run_plan(
             else "failed"
         ),
     )
+
+    if progress:
+        ok_count = sum(r.ok for r in results)
+        _emit_progress(
+            f"{plan.scenario_name}/{plan.variant}: simulation phase finished | "
+            f"{ok_count}/{total} Tx OK | "
+            f"elapsed {_format_duration(time.perf_counter() - run_start)}"
+        )
+
     return results
