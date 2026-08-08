@@ -93,6 +93,9 @@ def build_command_plan(
     command = [*scenario.execution.executable, str(item.input_path)]
     if geometry_only:
         command.append("--geometry-only")
+        command.extend(scenario.execution.extra_args)
+    else:
+        command.extend(scenario.execution.command_suffix())
     command.extend(scenario.execution.command_suffix())
     env: dict[str, str] = {}
     if scenario.execution.omp_threads is not None:
