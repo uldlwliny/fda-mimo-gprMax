@@ -265,6 +265,10 @@ def _default_tau_grid(
     if not math.isfinite(hi) or hi <= lo:
         raise ValueError("tau_max must be finite and greater than tau_min")
     grid = np.logspace(np.log10(lo), np.log10(hi), n_poles)
+    # np.logspace(log10(lo), log10(hi), ...) does not guarantee that
+    # the reconstructed floating-point endpoints remain inside [lo, hi].
+    # Enforce the requested relaxation-time bounds explicitly.
+    grid = np.clip(grid, lo, hi)
     if lo <= medium.tau <= hi and n_poles > 0:
         grid[int(np.argmin(np.abs(np.log(grid) - np.log(medium.tau))))] = medium.tau
         grid = np.sort(grid)

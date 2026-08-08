@@ -157,7 +157,14 @@ def test_unknown_catalog_key_rejected() -> None:
         )
 
 
-def test_debye_fit_respects_fdtd_tau_floor():
+@pytest.mark.parametrize(
+    "dt",
+    [
+        2.0e-11,
+        3.32733e-12,
+    ],
+)
+def test_debye_fit_respects_fdtd_tau_floor(dt: float) -> None:
     medium = ColeColeMedium(
         material_id="soil",
         eps_s=30.26,
@@ -172,8 +179,6 @@ def test_debye_fit_respects_fdtd_tau_floor():
         np.log10(150e6),
         256,
     )
-
-    dt = 2.0e-11
 
     tau_min = np.nextafter(
         dt,
