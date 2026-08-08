@@ -10,6 +10,7 @@ Requires-Dist: numpy>=1.24
 Requires-Dist: h5py>=3.8
 Requires-Dist: PyYAML>=6.0
 Requires-Dist: matplotlib>=3.7
+Requires-Dist: scipy>=1.10
 Provides-Extra: test
 Requires-Dist: pytest>=7.0; extra == "test"
 Provides-Extra: zarr

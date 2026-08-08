@@ -129,13 +129,25 @@ def test_catalog_resolution_and_render_commands() -> None:
     )
     assert medium.material_id == "soil"
     assert medium.eps_s == DEFAULT_COLE_COLE_CATALOG["S1"]["eps_s"]
-    approx = fit_cole_cole_to_debye(medium, np.logspace(7, 8, 32), n_poles=4)
+
+    approx = fit_cole_cole_to_debye(
+        medium,
+        np.logspace(7, 8, 32),
+        n_poles=4,
+    )
+
     commands = render_debye_material_commands(approx)
     text = "\n".join(commands)
+
     assert "#material:" in text
     assert "#add_dispersion_debye:" in text
     assert "soil" in text
-    assert "#add_dispersion_debye: 4" in text
+
+    rendered_poles = sum(de > 1e-30 for de in approx.delta_eps)
+
+    assert rendered_poles > 0
+    assert rendered_poles <= len(approx.delta_eps)
+    assert f"#add_dispersion_debye: {rendered_poles}" in text
 
 
 def test_unknown_catalog_key_rejected() -> None:

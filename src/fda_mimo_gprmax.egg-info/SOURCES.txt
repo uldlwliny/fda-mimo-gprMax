@@ -13,6 +13,7 @@ src/fda_mimo_gprmax/protocol.py
 src/fda_mimo_gprmax/rendering.py
 src/fda_mimo_gprmax/running.py
 src/fda_mimo_gprmax/serialization.py
+src/fda_mimo_gprmax/source_waveform.py
 src/fda_mimo_gprmax/subtraction.py
 src/fda_mimo_gprmax/validation.py
 src/fda_mimo_gprmax.egg-info/PKG-INFO
@@ -35,5 +36,6 @@ tests/test_rendering.py
 tests/test_rendering_cole_cole.py
 tests/test_running.py
 tests/test_serialization.py
+tests/test_source_waveform.py
 tests/test_subtraction.py
 tests/test_validation.py

@@ -2,6 +2,8 @@ openspec/
 
 experiments/
 
+**/__pycache__/
+
 # FDA-MIMO-GPR application experiment heavy outputs
 # /experiments/**/runs/**
 # !experiments/_template/runs/
