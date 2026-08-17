@@ -149,7 +149,12 @@ def render_structured_media_commands(scenario: ScenarioConfig) -> list[str]:
 
 
 def render_input_text(
-    scenario: ScenarioConfig, variant: VariantConfig, tx_index: int, config_dir: Path
+    scenario: ScenarioConfig,
+    variant: VariantConfig,
+    tx_index: int,
+    config_dir: Path,
+    *,
+    geometry_only: bool = False,
 ) -> tuple[str, Path | None, str]:
     waveform_lines, excitation_path, waveform_id = _waveform_lines(
         scenario, tx_index, config_dir
@@ -176,7 +181,7 @@ def render_input_text(
     lines.append(_source_line(scenario, tx_index, waveform_id))
     for rx_index, pos in enumerate(scenario.array.rx_positions.tolist()):
         lines.append(_rx_line(rx_index, pos, scenario.receiver.component))
-    if scenario.scene.geometry_view:
+    if geometry_only and scenario.scene.geometry_view:
         sx, sy, sz = scenario.domain.size
         dx, dy, dz = scenario.grid.spacing
         lines.extend(
@@ -193,6 +198,8 @@ def render_scenario_inputs(
     scenario: ScenarioConfig,
     variant_name: str | None = None,
     run_dir: str | Path | None = None,
+    *,
+    geometry_only: bool = False,
 ) -> RenderPlan:
     variant = scenario.variant(variant_name or scenario.variants[0].name)
     base = (
@@ -212,7 +219,11 @@ def render_scenario_inputs(
     rendered: list[RenderedInput] = []
     for tx_index in range(scenario.nt):
         text, excitation_path, waveform_id = render_input_text(
-            scenario, variant, tx_index, config_dir
+            scenario,
+            variant,
+            tx_index,
+            config_dir,
+            geometry_only=geometry_only,
         )
         input_path = config_dir / f"generated_tx_{tx_index:03d}.in"
         input_path.write_text(text, encoding="utf-8")
@@ -253,7 +264,7 @@ def render_scenario_inputs(
                 str(rendered[0].input_path),
                 "--geometry-only",
             ]
-            if rendered
+            if rendered and geometry_only
             else []
         ),
     )

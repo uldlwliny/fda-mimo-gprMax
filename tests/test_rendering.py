@@ -14,6 +14,7 @@ def test_render_per_tx_inputs(scenario_yaml, tmp_path):
         assert text.count("#rx:") == scenario.nr
         assert f"{item.center_frequency:.9g}" in text
         assert item.component == "Ez"
+        assert "#geometry_view:" not in text
     assert (plan.logs_dir / "run_manifest.json").exists()
 
 
@@ -107,12 +108,25 @@ def test_excitation_file_rejects_non_degenerate_fda(
         )
 
 
-def test_geometry_only_hint(scenario_yaml, tmp_path):
+def test_geometry_view_requires_geometry_only(scenario_yaml, tmp_path):
     import yaml
 
     data = yaml.safe_load(scenario_yaml.read_text())
     data["scene"]["geometry_view"] = True
     scenario = ScenarioConfig.from_mapping(data, source_path=scenario_yaml)
-    plan = render_scenario_inputs(scenario, "target", run_dir=tmp_path / "run")
-    assert "--geometry-only" in plan.geometry_only_command_hint
-    assert "#geometry_view:" in plan.inputs[0].input_path.read_text()
+
+    normal = render_scenario_inputs(
+        scenario,
+        "target",
+        run_dir=tmp_path / "normal",
+    )
+    assert "#geometry_view:" not in normal.inputs[0].input_path.read_text()
+
+    geometry = render_scenario_inputs(
+        scenario,
+        "target",
+        run_dir=tmp_path / "geometry",
+        geometry_only=True,
+    )
+    assert "--geometry-only" in geometry.geometry_only_command_hint
+    assert "#geometry_view:" in geometry.inputs[0].input_path.read_text()

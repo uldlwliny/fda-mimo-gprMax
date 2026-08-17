@@ -58,7 +58,10 @@ def cmd_render(args: argparse.Namespace) -> int:
     plans = []
     for variant in variants:
         plan = render_scenario_inputs(
-            scenario, variant_name=variant, run_dir=args.run_dir
+            scenario,
+            variant_name=variant,
+            run_dir=args.run_dir,
+            geometry_only=args.geometry_only,
         )
         commands = [
             build_command_plan(scenario, plan, item, geometry_only=args.geometry_only)
@@ -73,7 +76,10 @@ def cmd_render(args: argparse.Namespace) -> int:
 def cmd_run(args: argparse.Namespace) -> int:
     scenario = load_scenario(args.scenario)
     plan = render_scenario_inputs(
-        scenario, variant_name=args.variant, run_dir=args.run_dir
+        scenario,
+        variant_name=args.variant,
+        run_dir=args.run_dir,
+        geometry_only=args.geometry_only,
     )
     if args.dry_run:
         commands = [
@@ -229,7 +235,10 @@ def cmd_workflow(args: argparse.Namespace) -> int:
     variant = args.variant or scenario.variants[0].name
     workflow_run_dir = Path(args.run_dir) / variant if args.run_dir else None
     plan = render_scenario_inputs(
-        scenario, variant_name=variant, run_dir=workflow_run_dir
+        scenario,
+        variant_name=variant,
+        run_dir=workflow_run_dir,
+        geometry_only=args.geometry_only,
     )
     commands = [
         build_command_plan(scenario, plan, item, geometry_only=args.geometry_only)
